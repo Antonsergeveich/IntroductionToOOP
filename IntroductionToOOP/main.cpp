@@ -28,13 +28,13 @@ public:
 	Point()
 	{
 		x = y = 0;
-		cout << "DefaultConstructor:\t" << this << endl;
+		cout << "DefaultConstructor:\t" << this << endl; //Конструктор по умолчанию
 	}
 	Point(double x)
 	{
 		this->x = x;
 		this->y = 0;
-		cout << "1ArgConstructor:\t" << this << endl;
+		cout << "1ArgConstructor:\t" << this << endl; //
 	}
 	Point(double x, double y)
 	{
@@ -199,7 +199,7 @@ void main()
 	-с параметрами;
 	-без параметров;
 	-конструктор по умолчанию (Default constructor);
-	-конструктор копирования;
+	-конструктор копирования; (CopyConstructor);
 		Побитовое копирование	(Deep copy);
 		Повехностное копирование(Shallow copy); Debug assertion failed
 	-конструктор переноса;
