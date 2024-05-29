@@ -1,6 +1,10 @@
 ﻿#include<iostream>
 using namespace std;
 
+using std::endl;
+using std::cin;
+using std::cout;
+
 #define DELIMETER  "\n-----------------------------\n"
 
 class Point
@@ -60,6 +64,21 @@ public:
 		cout << "CopyAssignment:\t\t" << this << endl;
 		return *this;
 	}
+
+	Point& operator++()//Prefix increment
+	{
+		x++;
+		y++;
+		return *this;
+	}
+	Point operator++(int)//Postfix increment
+	{
+		Point old = *this;
+		x++;
+		y++;
+		return old;
+	}
+
 	//Methods:
 	double distance(const Point& other)const
 	{
@@ -76,7 +95,52 @@ public:
 	}
 };
 
-double distance(const Point& A,const Point& B)
+Point operator+(const Point& left, const Point& right)
+{
+	Point result;
+	result.set_x(left.get_x() + right.get_x());
+	result.set_y(left.get_y() + right.get_y());
+	return result;
+}
+
+Point operator-(const Point& left, const Point& right)
+{
+	Point result
+	{
+		left.get_x() - right.get_x(),
+		left.get_y() - right.get_y()
+	};
+	return result;
+}
+
+Point operator*(const Point& left, const Point& right)
+{
+	return Point
+	{
+		left.get_x() * right.get_x(),
+		left.get_y() * right.get_y()
+	};
+}
+
+Point operator/(const Point& left, const Point& right)
+{
+	Point result
+	{
+		left.get_x() / right.get_x(),
+		left.get_y() / right.get_y()
+	};
+	return result;
+}
+
+bool operator==(const Point& left, const Point& right)
+{
+	return left.get_x() == right.get_x() && left.get_y() == right.get_y();
+	/*if (left.get_x() == right.get_x() && left.get_y() == right.get_y())
+		return true;
+	else return false;*/
+}
+
+double distance(const Point& A, const Point& B)
 {
 	double x_distance = A.get_x() - B.get_x();
 	double y_distance = A.get_y() - B.get_y();
@@ -87,7 +151,8 @@ double distance(const Point& A,const Point& B)
 //#define STRUCT_POINT
 //#define DISTANCE_CHEK
 //#define CONSTRUCTORS_CHEK
-#define ASSIGNMENT_CHECK
+//#define ASSIGNMENT_CHECK
+//#define ARIFMETICAL_OPERATORS_CHECK
 
 void main()
 {
@@ -134,7 +199,7 @@ void main()
 	Point B = 5;
 	B.print();
 
-	Point C(2, 3);
+	Point C(2, 3);//Constructor
 	C.print();
 
 	Point D = C; // Copy constructor
@@ -142,13 +207,12 @@ void main()
 #endif // CONSTRUCTORS_CHEK
 #ifdef ASSIGNMENT_CHECK
 	//Point A(2, 3); //Constructor
-//Point B;       //Default constructor
-//B = A;         //Copy assignment
-//B.print();
-	int a, b, c;
-	a = b = c = 0;
-	cout << a << "\t" << b << "\t" << c << endl;
-
+	//Point B;       //Default constructor
+	//B = A;         //Copy assignment
+	//B.print();
+		/*int a, b, c;
+		a = b = c = 0;
+		cout << a << "\t" << b << "\t" << c << endl;*/
 	Point A, B, C;
 	cout << DELIMETER << endl;
 	A = B = C = Point(2, 3);
@@ -157,7 +221,21 @@ void main()
 	B.print();
 	C.print();
 #endif // ASSIGNMENT_CHECK
+#ifdef ARIFMETICAL_OPERATORS_CHECK
+	Point A(2, 3);
+	Point B(7, 8);
+	A.print();
+	B.print();
 
+	Point C = B * A;
+	C.print();
+
+	C++;
+	C.print();
+#endif // ARIFMETICAL_OPERATORS_CHECK
+
+	//cout << (2 == 3) << endl;
+	cout << (Point(2, 3) == Point(2, 3)) << endl;
 }
 /*
 ------------------------------------------------
@@ -206,14 +284,14 @@ void main()
 2. ~Destructor  - это метод, который уничтожает объект по завершении его времени жизни.
 3. Assignment operator; Оператор присваивания - побитово копирует обЪект после его создания;
 Конструктор копирования может быть вызван только при создании объекта.
-Его невозможно вы звать после создания объекта. 
+Его невозможно вы звать после создания объекта.
 И для того чтобы скопировать объект после его создания используетсяоператор присваивания
 Оператор присваивания делает тоже самое что и конструктор копирования, но уже после создан ия объекта
 А именно существующий объект делает точной копией другого существующего объекта
 При  возврате значения по значению оно копируется на место вызова. И если возвращаемое значение объект
 то для этого вызывается конструктор копирования.
 Для того чтобы возвращаемое значение не копировалось на место вызова его можно вернуть по указателю либо по ссылке.
-Тогда на место вызова скопируется не само возвращаемое значение, а его адрес, 
+Тогда на место вызова скопируется не само возвращаемое значение, а его адрес,
 т.е. в случае с объектом конструктор копирования вызываться не будет
 ------------------------------------------------
 */
