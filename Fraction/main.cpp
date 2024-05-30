@@ -25,6 +25,7 @@ public:
 		this->numerator = numerator;
 		this->denominator = denominator;
 	}
+	
 	Fraction& operator = (const Fraction& fract)
 	{
 		this->integer = fract.integer;
@@ -71,6 +72,8 @@ public:
 	{
 		this->denominator = denominator;
 	}
+	
+
 	void Print()const
 	{
 		cout << "Integer = \t" << integer << endl;
@@ -82,9 +85,10 @@ public:
 Fraction operator+(const Fraction& left, const Fraction& right)
 {
 	Fraction result;
-	result.set_integer(left.get_integer() + right.get_integer());
+	/*result.set_integer(left.get_integer() + right.get_integer());
 	result.set_numerator(left.get_numerator() * right.get_denominator() + right.get_numerator() * left.get_denominator());
-	result.set_denominator(left.get_denominator() * right.get_denominator());
+	result.set_denominator(left.get_denominator() * right.get_denominator());*/
+	
 	return result;
 }
 Fraction operator/(const Fraction& left, const int integer)
@@ -110,15 +114,15 @@ void main()
 	Fraction F2(1, 2, 3);
 	F2.Print();
 	cout << delimeter << endl;
-	/*Fraction F3 = F1 + F2;
+	Fraction F3 = F1 + F2;
 	F3.Print();
-	cout << delimeter << endl;
+	/*cout << delimeter << endl;
     F3++;
 	F3.Print();
 	cout << delimeter << endl;
 	++F3;
-	F3.Print();*/
+	F3.Print();
 	cout << delimeter << endl;
     F1 = F1 / 2;
-	F1.Print();
+	F1.Print();*/
 }
