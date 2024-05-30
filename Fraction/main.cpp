@@ -25,7 +25,28 @@ public:
 		this->numerator = numerator;
 		this->denominator = denominator;
 	}
-
+	Fraction& operator = (const Fraction& fract)
+	{
+		this->integer = fract.integer;
+		this->numerator = fract.numerator;
+		this->denominator = fract.denominator;
+		return *this;
+	}
+	Fraction& operator ++()//Prefix increment
+	{
+		integer++;
+		numerator++;
+		denominator++;
+		return *this;
+	}
+	Fraction operator ++(int)//Postfix increment
+	{
+		Fraction old = *this;
+		integer++;
+		numerator++;
+		denominator++;
+		return old;
+	}
 	int get_integer()const
 	{
 		return integer;
@@ -62,20 +83,42 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 {
 	Fraction result;
 	result.set_integer(left.get_integer() + right.get_integer());
-	result.set_numerator(left.get_numerator()*right.get_denominator()+right.get_numerator()*left.get_denominator());
+	result.set_numerator(left.get_numerator() * right.get_denominator() + right.get_numerator() * left.get_denominator());
 	result.set_denominator(left.get_denominator() * right.get_denominator());
+	return result;
+}
+Fraction operator/(const Fraction& left, const int integer)
+{
+	Fraction result;
+	int n = result.get_numerator(); int d = result.get_denominator(); int i = result.get_integer();
+	result.set_numerator((left.get_numerator()+(left.get_denominator()*left.get_integer())) * 1);
+	result.set_denominator(left.get_denominator() * integer);
+	result.set_integer(result.get_numerator() / result.get_denominator());
+	if ((n > d) || (i == 0))
+	{
+		result.set_numerator(result.get_numerator() - result.get_integer() * result.get_denominator());
+	}
 	return result;
 }
 
 void main()
 {
 	setlocale(LC_ALL, "");
-	Fraction f1(1, 2, 3);
-	f1.Print();
+	Fraction F1(10, 2, 3);
+	F1.Print();
 	cout << delimeter << endl;
-	Fraction f2(1, 2, 3);
-	f2.Print();
+	Fraction F2(1, 2, 3);
+	F2.Print();
 	cout << delimeter << endl;
-	Fraction f3 = f1 + f2;
-	f3.Print();
+	/*Fraction F3 = F1 + F2;
+	F3.Print();
+	cout << delimeter << endl;
+    F3++;
+	F3.Print();
+	cout << delimeter << endl;
+	++F3;
+	F3.Print();*/
+	cout << delimeter << endl;
+    F1 = F1 / 2;
+	F1.Print();
 }
