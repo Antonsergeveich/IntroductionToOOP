@@ -13,10 +13,41 @@ class Fraction
 	int denominator;  //знаменатель
 	int integer;      //целое число
 public:
+	Fraction()
+	{
+		integer = 0;
+		numerator = 0;
+		denominator = 0;
+	}
 	Fraction(int integer, int numerator, int denominator)
 	{
 		this->integer = integer;
 		this->numerator = numerator;
+		this->denominator = denominator;
+	}
+
+	int get_integer()const
+	{
+		return integer;
+	}
+	int get_numerator()const
+	{
+		return numerator;
+	}
+	int get_denominator()const
+	{
+		return denominator;
+	}
+	void set_integer(int integer)
+	{
+		this->integer = integer;
+	}
+	void set_numerator(int numerator)
+	{
+		this->numerator = numerator;
+	}
+	void set_denominator(int denominator)
+	{
 		this->denominator = denominator;
 	}
 	void Print()const
@@ -27,17 +58,24 @@ public:
 	}
 };
 
-
+Fraction operator+(const Fraction& left, const Fraction& right)
+{
+	Fraction result;
+	result.set_integer(left.get_integer() + right.get_integer());
+	result.set_numerator(left.get_numerator()*right.get_denominator()+right.get_numerator()*left.get_denominator());
+	result.set_denominator(left.get_denominator() * right.get_denominator());
+	return result;
+}
 
 void main()
 {
 	setlocale(LC_ALL, "");
-	Fraction fract_1(0,2,3);
-	fract_1.Print();
+	Fraction f1(1, 2, 3);
+	f1.Print();
 	cout << delimeter << endl;
-	Fraction fract_2(0,3,4);
-	fract_2.Print();
+	Fraction f2(1, 2, 3);
+	f2.Print();
 	cout << delimeter << endl;
-	
-	
+	Fraction f3 = f1 + f2;
+	f3.Print();
 }
