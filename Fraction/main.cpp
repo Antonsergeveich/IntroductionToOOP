@@ -19,6 +19,7 @@ public:
 		numerator = 0;
 		denominator = 0;
 	}
+	
 	Fraction(int integer, int numerator, int denominator)
 	{
 		this->integer = integer;
@@ -78,7 +79,7 @@ public:
 	}
 };
 
-Fraction operator+(const Fraction& left, const Fraction& right) 
+Fraction operator+(const Fraction& left, const Fraction& right) //сложение
 {
 	Fraction result;
 	result.set_numerator(((left.get_integer() * left.get_denominator() + left.get_numerator()) * right.get_denominator())+((right.get_integer()*right.get_denominator()+right.get_numerator())*left.get_denominator()));
@@ -105,16 +106,30 @@ Fraction operator/(const Fraction& left, const int integer)//деление дроби на це
 	return result;
 }
 
+Fraction operator/(const Fraction& left, const Fraction& right)
+{
+	Fraction result;
+	int n = result.get_numerator(); int d = result.get_denominator(); int i = result.get_integer();
+	result.set_numerator((left.get_integer() * left.get_denominator() + left.get_numerator()) * right.get_denominator());
+	result.set_denominator((right.get_integer() * right.get_denominator() + right.get_numerator()) * left.get_denominator());
+	result.set_integer(result.get_numerator() / result.get_denominator());
+	if ((n > d) || (i == 0))
+	{
+		result.set_numerator(result.get_numerator() - result.get_integer() * result.get_denominator());
+	}
+	return result;
+}
+
 void main()
 {
 	setlocale(LC_ALL, "");
-	Fraction F1(0, 2, 3);
+	Fraction F1(2,1,2);
 	F1.Print();
 	cout << delimeter << endl;
-	Fraction F2(0, 2, 3);
+	Fraction F2(2,1,2);
 	F2.Print();
 	cout << delimeter << endl;
-	Fraction F3 = F1 + F2;
+	Fraction F3 = F1 / F2;
 	F3.Print();
 	/*cout << delimeter << endl;
     F1++;
