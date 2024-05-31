@@ -77,7 +77,7 @@ public:
 	}
 };
 
-Fraction operator+(const Fraction& left, const Fraction& right) //сложение
+Fraction operator+(const Fraction& left, const Fraction& right) //сложение дробей
 {
 	Fraction result;
 	result.set_numerator(((left.get_integer() * left.get_denominator() + left.get_numerator()) * right.get_denominator()) + ((right.get_integer() * right.get_denominator() + right.get_numerator()) * left.get_denominator()));
@@ -90,12 +90,20 @@ Fraction operator+(const Fraction& left, const Fraction& right) //сложени
 	}
 	return result;
 }
-Fraction operator/(const Fraction& left, const int integer)//деление дроби на целое число
+Fraction operator+(const Fraction& left, const int value) //сложение дроби с целым числом
+{
+	Fraction result;
+	result.set_integer(left.get_integer() + value);
+	result.set_numerator(left.get_numerator());
+	result.set_denominator(left.get_denominator());
+	return result;
+}
+Fraction operator/(const Fraction& left, const int value) //деление дроби на целое число
 {
 	Fraction result;
 	int n = result.get_numerator(); int d = result.get_denominator(); int i = result.get_integer();
 	result.set_numerator((left.get_numerator() + (left.get_denominator() * left.get_integer())) * 1);
-	result.set_denominator(left.get_denominator() * integer);
+	result.set_denominator(left.get_denominator() * value);
 	result.set_integer(result.get_numerator() / result.get_denominator());
 	if ((n > d) || (i == 0))
 	{
@@ -104,7 +112,7 @@ Fraction operator/(const Fraction& left, const int integer)//деление др
 	return result;
 }
 
-Fraction operator/(const Fraction& left, const Fraction& right)//деление с тремя данными
+Fraction operator/(const Fraction& left, const Fraction& right) //деление дробей
 {
 	Fraction result;
 	result.set_numerator((left.get_integer() * left.get_denominator() + left.get_numerator()) * right.get_denominator());
@@ -121,15 +129,18 @@ Fraction operator/(const Fraction& left, const Fraction& right)//деление 
 void main()
 {
 	setlocale(LC_ALL, "");
-	Fraction F1(2, 1, 2);
+	Fraction F1(2,1,2);
 	F1.Print();
 	cout << delimeter << endl;
-	Fraction F2(2, 1, 2);
+	Fraction F2(1,3,4);
 	F2.Print();
+	cout << delimeter << endl;
+	F1 = F1 + 2;
+	F1.Print();
 	cout << delimeter << endl;
 	Fraction F3 = F1 / F2;
 	F3.Print();
-	cout << delimeter << endl;
+	/*cout << delimeter << endl;
 	F1++;
 	F1.Print();
 	cout << delimeter << endl;
@@ -137,5 +148,5 @@ void main()
 	F1.Print();
 	cout << delimeter << endl;
 	F1 = F1 / 2;
-	F1.Print();
+	F1.Print();*/
 }
