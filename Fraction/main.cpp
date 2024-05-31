@@ -106,7 +106,7 @@ Fraction operator/(const Fraction& left, const int integer)//деление др
 	return result;
 }
 
-Fraction operator/(const Fraction& left, const Fraction& right)
+Fraction operator/(const Fraction& left, const Fraction& right)//деление с тремя данными
 {
 	Fraction result;
 	int n = result.get_numerator(); int d = result.get_denominator(); int i = result.get_integer();
@@ -131,7 +131,7 @@ void main()
 	cout << delimeter << endl;
 	Fraction F3 = F1 / F2;
 	F3.Print();
-	/*cout << delimeter << endl;
+	cout << delimeter << endl;
     F1++;
 	F1.Print();
 	cout << delimeter << endl;
@@ -139,5 +139,5 @@ void main()
 	F1.Print();
 	cout << delimeter << endl;
     F1 = F1 / 2;
-	F1.Print();*/
+	F1.Print();
 }
