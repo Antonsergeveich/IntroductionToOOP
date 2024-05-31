@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 using namespace std;
 
 using std::cout;
@@ -9,9 +9,9 @@ using std::endl;
 
 class Fraction
 {
-	int numerator;    //числитель
-	int denominator;  //знаменатель
-	int integer;      //целое число
+	int numerator;    //С‡РёСЃР»РёС‚РµР»СЊ
+	int denominator;  //Р·РЅР°РјРµРЅР°С‚РµР»СЊ
+	int integer;      //С†РµР»РѕРµ С‡РёСЃР»Рѕ
 public:
 	Fraction()
 	{
@@ -79,7 +79,7 @@ public:
 	}
 };
 
-Fraction operator+(const Fraction& left, const Fraction& right) //сложение
+Fraction operator+(const Fraction& left, const Fraction& right) //СЃР»РѕР¶РµРЅРёРµ
 {
 	Fraction result;
 	result.set_numerator(((left.get_integer() * left.get_denominator() + left.get_numerator()) * right.get_denominator())+((right.get_integer()*right.get_denominator()+right.get_numerator())*left.get_denominator()));
@@ -92,7 +92,7 @@ Fraction operator+(const Fraction& left, const Fraction& right) //сложение
 	}
 	return result;
 }
-Fraction operator/(const Fraction& left, const int integer)//деление дроби на целое число
+Fraction operator/(const Fraction& left, const int integer)//РґРµР»РµРЅРёРµ РґСЂРѕР±Рё РЅР° С†РµР»РѕРµ С‡РёСЃР»Рѕ
 {
 	Fraction result;
 	int n = result.get_numerator(); int d = result.get_denominator(); int i = result.get_integer();
