@@ -1,6 +1,8 @@
 #include<iostream>
 using namespace std;
 
+#define delimeter "\n-------------------------------\n"
+
 class Fraction
 {
 	int integer;
@@ -104,8 +106,19 @@ public:
 		integer--;
 		return old;
 	}
-
-
+	Fraction& operator += (int rvalue)
+	{
+		this->integer = integer + rvalue;
+		return *this;
+	}
+	/*Fraction& operator += (const Fraction& right)
+	{
+		Fraction old = *this;
+		this->integer = old.to_improper() + right.to_improper();
+		this->numerator = numerator + right.numerator;
+		this->denominator = denominator + right.denominator;
+		return *this;
+	}*/
 	//              Methods:
 	Fraction& to_proper()
 	{
@@ -155,6 +168,17 @@ Fraction operator/ (const Fraction& left, const Fraction& right)
 {
 	return left * right.inverted();
 }
+Fraction operator+ (Fraction& left, Fraction& right)
+{
+	left.to_improper();
+	right.to_improper();
+	return Fraction
+	(
+		(left.get_numerator() * right.get_denominator()) + (left.get_denominator() * right.get_numerator()),
+		left.get_denominator() * right.get_denominator()
+	).to_proper();
+}
+
 
 //#define CONSTRUCTORS_CHECK
 void main()
@@ -180,14 +204,15 @@ void main()
 	F = E;
 	F.print();
 #endif // CONSTRUCTORS_CHECK
-	Fraction A(2, 3, 4);
+	Fraction A(1, 1, 2);
 	A.print();
 
-	Fraction B(3, 4, 5);
+	Fraction B(2, 2, 3);
 	B.print();
 
-	Fraction C = A / B;
+	Fraction C = A + B;
 	C.print();
-		
+
 	
+
 }
