@@ -111,6 +111,11 @@ public:
 		this->integer = integer + rvalue;
 		return *this;
 	}
+	Fraction& operator -= (int rvalue)
+	{
+		this->integer = integer - rvalue;
+		return *this;
+	}
 	Fraction& operator += (Fraction& right)
 	{
 		Fraction old = *this;
@@ -120,6 +125,7 @@ public:
 		denominator = old.denominator * right.denominator;
 		integer = 0;
 		to_proper();
+		reduction();
 		return old;
 	}
 	Fraction& operator -= (Fraction& right)
@@ -133,6 +139,13 @@ public:
 		to_proper();
 		reduction();
 		return old;
+	}
+	Fraction& operator *= (int rvalue)
+	{
+		to_improper(); numerator = numerator * rvalue;
+		to_proper();
+		reduction();
+		return *this;
 	}
 
 	//              Methods:
@@ -205,7 +218,7 @@ Fraction operator+ (Fraction& left, Fraction& right)
 	(
 		(left.get_numerator() * right.get_denominator()) + (left.get_denominator() * right.get_numerator()),
 		left.get_denominator() * right.get_denominator()
-	).to_proper();
+	).to_proper().reduction();
 }
 Fraction operator- (Fraction& left, Fraction& right)
 {
@@ -215,7 +228,7 @@ Fraction operator- (Fraction& left, Fraction& right)
 	(
 		(left.get_numerator() * right.get_denominator()) - (left.get_denominator() * right.get_numerator()),
 		left.get_denominator() * right.get_denominator()
-	).to_proper();
+	).to_proper().reduction();
 }
 
 //#define CONSTRUCTORS_CHECK
@@ -242,16 +255,15 @@ void main()
 	F = E;
 	F.print();
 #endif // CONSTRUCTORS_CHECK
-	Fraction A(7, 5, 6);
+	Fraction A(2, 4, 12);
 	A.print();
 
-	Fraction B(2, 2, 8);
-	B.print();
+	/*Fraction B(2, 2, 8);
+	B.print();*/
 
-	/*Fraction C = A - B;
-	C.print();*/
-
-	A -= B;
+	A *= 8;
 	A.print();
+
+	
 
 }
