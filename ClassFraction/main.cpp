@@ -147,6 +147,17 @@ public:
 		reduction();
 		return *this;
 	}
+	Fraction& operator /= (int rvalue)
+	{
+		to_improper(); denominator = denominator * rvalue;
+		to_proper();
+		reduction();
+		return *this;
+	}
+	Fraction& operator *= (Fraction& right)
+	{
+
+	}
 
 	//              Methods:
 	Fraction& to_proper()
@@ -255,13 +266,13 @@ void main()
 	F = E;
 	F.print();
 #endif // CONSTRUCTORS_CHECK
-	Fraction A(2, 4, 12);
+	Fraction A(2, 4, 8);
 	A.print();
 
 	/*Fraction B(2, 2, 8);
 	B.print();*/
 
-	A *= 8;
+	A /= 2;
 	A.print();
 
 	
