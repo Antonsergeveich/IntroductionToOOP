@@ -82,6 +82,30 @@ public:
 		cout << "CopyAssignment:\t\t" << this << endl;
 		return *this;
 	}
+	Fraction& operator++()//Prefix increment
+	{
+		integer++;
+		return *this;
+	}
+	Fraction operator++(int)//Postfix increment
+	{
+		Fraction old = *this;
+		integer++;
+		return old;
+	}
+	Fraction& operator--()//Prefix decrement
+	{
+		integer--;
+		return *this;
+	}
+	Fraction operator--(int)//Postfix decrement
+	{
+		Fraction old = *this;
+		integer--;
+		return old;
+	}
+
+
 	//              Methods:
 	Fraction& to_proper()
 	{
@@ -164,7 +188,6 @@ void main()
 
 	Fraction C = A / B;
 	C.print();
-
-	A.print();
-	B.print();
+		
+	
 }

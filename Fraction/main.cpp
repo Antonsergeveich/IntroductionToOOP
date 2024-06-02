@@ -140,7 +140,7 @@ void main()
 	cout << delimeter << endl;
 	Fraction F3 = F1 / F2;
 	F3.Print();
-	/*cout << delimeter << endl;
+	cout << delimeter << endl;
 	F1++;
 	F1.Print();
 	cout << delimeter << endl;
@@ -148,5 +148,5 @@ void main()
 	F1.Print();
 	cout << delimeter << endl;
 	F1 = F1 / 2;
-	F1.Print();*/
+	F1.Print();
 }
