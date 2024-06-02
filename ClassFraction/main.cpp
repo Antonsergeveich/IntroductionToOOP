@@ -114,8 +114,13 @@ public:
 	Fraction& operator += (Fraction& right)
 	{
 		Fraction old = *this;
-		old = old.numerator += old.integer * old.denominator + right.numerator*right.denominator;
-		return old.to_proper();
+		old.to_improper();
+		right.to_improper();
+		numerator = old.numerator * right.denominator + old.denominator * right.numerator;
+		denominator = old.denominator * right.denominator;
+		integer = 0;
+	    to_proper();
+		return old;
 	}
 	//              Methods:
 	Fraction& to_proper()
@@ -214,11 +219,11 @@ void main()
 	Fraction A(1, 1, 2);
 	A.print();
 
-	Fraction B(1, 1, 2);
+	Fraction B(1, 6);
 	B.print();
 
-	Fraction C = A - B;
-	C.print();
+	/*Fraction C = A - B;
+	C.print();*/
 
 	A += B;
 	A.print();
