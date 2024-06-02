@@ -111,14 +111,12 @@ public:
 		this->integer = integer + rvalue;
 		return *this;
 	}
-	/*Fraction& operator += (const Fraction& right)
+	Fraction& operator += (Fraction& right)
 	{
 		Fraction old = *this;
-		this->integer = old.to_improper() + right.to_improper();
-		this->numerator = numerator + right.numerator;
-		this->denominator = denominator + right.denominator;
-		return *this;
-	}*/
+		old = old.numerator += old.integer * old.denominator + right.numerator*right.denominator;
+		return old.to_proper();
+	}
 	//              Methods:
 	Fraction& to_proper()
 	{
@@ -213,15 +211,16 @@ void main()
 	F = E;
 	F.print();
 #endif // CONSTRUCTORS_CHECK
-	Fraction A(5, 4, 6);
+	Fraction A(1, 1, 2);
 	A.print();
 
-	Fraction B(2, 1, 8);
+	Fraction B(1, 1, 2);
 	B.print();
 
 	Fraction C = A - B;
 	C.print();
 
-	
+	A += B;
+	A.print();
 
 }
