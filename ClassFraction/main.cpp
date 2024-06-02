@@ -178,7 +178,16 @@ Fraction operator+ (Fraction& left, Fraction& right)
 		left.get_denominator() * right.get_denominator()
 	).to_proper();
 }
-
+Fraction operator- (Fraction& left, Fraction& right)
+{
+	left.to_improper();
+	right.to_improper();
+	return Fraction
+	(
+		(left.get_numerator() * right.get_denominator()) - (left.get_denominator() * right.get_numerator()),
+		left.get_denominator() * right.get_denominator()
+	).to_proper();
+}
 
 //#define CONSTRUCTORS_CHECK
 void main()
@@ -204,13 +213,13 @@ void main()
 	F = E;
 	F.print();
 #endif // CONSTRUCTORS_CHECK
-	Fraction A(1, 1, 2);
+	Fraction A(5, 4, 6);
 	A.print();
 
-	Fraction B(2, 2, 3);
+	Fraction B(2, 1, 8);
 	B.print();
 
-	Fraction C = A + B;
+	Fraction C = A - B;
 	C.print();
 
 	
