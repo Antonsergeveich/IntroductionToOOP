@@ -119,9 +119,22 @@ public:
 		numerator = old.numerator * right.denominator + old.denominator * right.numerator;
 		denominator = old.denominator * right.denominator;
 		integer = 0;
-	    to_proper();
+		to_proper();
 		return old;
 	}
+	Fraction& operator -= (Fraction& right)
+	{
+		Fraction old = *this;
+		old.to_improper();
+		right.to_improper();
+		numerator = old.numerator * right.denominator - old.denominator * right.numerator;
+		denominator = old.denominator * right.denominator;
+		integer = 0;
+		to_proper();
+		reduction();
+		return old;
+	}
+
 	//              Methods:
 	Fraction& to_proper()
 	{
@@ -141,6 +154,19 @@ public:
 		inverted.to_improper();
 		swap(inverted.numerator, inverted.denominator); // swap - меняет местами элементы
 		return inverted;
+	}
+	Fraction& reduction()
+	{
+		int i = 0, j = 0;
+		while (i == 0 || j == 0)
+		{
+			if (numerator & 1 != 0 || denominator & 1 != 0)break;
+			i = numerator & 1;
+			j = denominator & 1;
+			numerator = numerator >> 1;
+			denominator = denominator >> 1;
+		}
+		return *this;
 	}
 
 	void print()const
@@ -216,16 +242,16 @@ void main()
 	F = E;
 	F.print();
 #endif // CONSTRUCTORS_CHECK
-	Fraction A(1, 1, 2);
+	Fraction A(7, 5, 6);
 	A.print();
 
-	Fraction B(1, 6);
+	Fraction B(2, 2, 8);
 	B.print();
 
 	/*Fraction C = A - B;
 	C.print();*/
 
-	A += B;
+	A -= B;
 	A.print();
 
 }
