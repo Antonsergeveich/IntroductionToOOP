@@ -74,7 +74,6 @@ public:
 	{
 		cout << "Destructor:\t" << this << endl;
 	}
-
 	//           Operators:
 	Fraction& operator=(const Fraction& other)
 	{
@@ -156,7 +155,7 @@ public:
 	}
 	Fraction& operator *= (Fraction right)
 	{
-		to_improper(); 
+		to_improper();
 		right.to_improper();
 		numerator = numerator * right.numerator;
 		denominator = denominator * right.denominator;
@@ -174,7 +173,6 @@ public:
 		reduction();
 		return *this;
 	}
-
 	//              Methods:
 	Fraction& to_proper()
 	{
@@ -208,7 +206,6 @@ public:
 		}
 		return *this;
 	}
-
 	void print()const
 	{
 		if (integer)cout << integer;
@@ -225,14 +222,14 @@ public:
 
 bool operator == (Fraction& left, Fraction& right)
 {
-	left.to_improper();right.to_improper();
-	left.reduction();right.reduction();
+	left.to_improper(); right.to_improper();
+	left.reduction(); right.reduction();
 	return left.get_numerator() == right.get_numerator() && left.get_denominator() == right.get_denominator();
 }
 bool operator != (Fraction& left, Fraction& right)
 {
-	left.to_improper();right.to_improper();
-	left.reduction();right.reduction();
+	left.to_improper(); right.to_improper();
+	left.reduction(); right.reduction();
 	return left.get_numerator() != right.get_numerator() && left.get_denominator() != right.get_denominator();
 }
 bool operator > (Fraction& left, Fraction& right)
@@ -326,7 +323,4 @@ void main()
 
 	bool comparison = A != B;
 	cout << comparison << endl;
-
-	
-
 }
