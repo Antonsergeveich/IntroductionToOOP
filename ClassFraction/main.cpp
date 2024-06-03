@@ -3,6 +3,11 @@ using namespace std;
 
 #define delimeter "\n-------------------------------\n"
 
+class Fraction;
+Fraction operator* (Fraction left, Fraction right);
+Fraction operator/ (const Fraction& left, const Fraction& right);
+
+
 class Fraction
 {
 	int integer;
@@ -153,25 +158,13 @@ public:
 		reduction();
 		return *this;
 	}
-	Fraction& operator *= (Fraction right)
+	Fraction& operator *= (const Fraction& other)
 	{
-		to_improper();
-		right.to_improper();
-		numerator = numerator * right.numerator;
-		denominator = denominator * right.denominator;
-		to_proper();
-		reduction();
-		return *this;
+		return *this = *this * other;
 	}
-	Fraction& operator /= (Fraction& right)
+	Fraction& operator /= (const Fraction& other)
 	{
-		to_improper();
-		right.to_improper();
-		numerator = numerator * right.denominator;
-		denominator = denominator * right.numerator;
-		to_proper();
-		reduction();
-		return *this;
+		return *this = *this / other;
 	}
 	//              Methods:
 	Fraction& to_proper()
@@ -195,15 +188,18 @@ public:
 	}
 	Fraction& reduction()
 	{
-		int i = 0, j = 0;
-		while (i == 0 || j == 0)
+		int more, less, rest;
+		if (numerator > denominator)more = numerator, less = denominator;
+		else more = denominator, less = numerator;
+		do
 		{
-			if (numerator & 1 != 0 || denominator & 1 != 0)break;
-			i = numerator & 1;
-			j = denominator & 1;
-			numerator = numerator >> 1;
-			denominator = denominator >> 1;
-		}
+			rest = more % less;
+			more = less;
+			less = rest;
+		} while (rest);
+		int GCD = more; //GCD - Greatest Common Divesor
+		numerator /= GCD;
+		denominator /= GCD;
 		return *this;
 	}
 	void print()const
@@ -220,41 +216,39 @@ public:
 	}
 };
 
-bool operator == (Fraction& left, Fraction& right)
+bool operator == (Fraction left, Fraction right)
 {
-	left.to_improper(); right.to_improper();
-	left.reduction(); right.reduction();
-	return left.get_numerator() == right.get_numerator() && left.get_denominator() == right.get_denominator();
+	left.to_improper();
+	right.to_improper();
+	return
+		left.get_numerator() * right.get_denominator() ==
+		right.get_numerator() * left.get_denominator();
 }
-bool operator != (Fraction& left, Fraction& right)
+bool operator != (const Fraction& left, const Fraction& right)
 {
-	left.to_improper(); right.to_improper();
-	left.reduction(); right.reduction();
-	return left.get_numerator() != right.get_numerator() && left.get_denominator() != right.get_denominator();
+	return !(left == right);
 }
-bool operator > (Fraction& left, Fraction& right)
+bool operator > (Fraction left, Fraction right)
 {
-	left.to_improper(); right.to_improper();
-	left.reduction(); right.reduction();
-	return left.get_numerator() > right.get_numerator() && left.get_denominator() > right.get_denominator();
+	return
+		left.get_numerator() * right.get_denominator() >
+		right.get_numerator() * left.get_denominator();
 }
-bool operator < (Fraction& left, Fraction& right)
+bool operator < (Fraction left, Fraction right)
 {
-	left.to_improper(); right.to_improper();
-	left.reduction(); right.reduction();
-	return left.get_numerator() < right.get_numerator() && left.get_denominator() < right.get_denominator();
+	return
+		left.get_numerator() * right.get_denominator() <
+		right.get_numerator() * left.get_denominator();
 }
-bool operator >= (Fraction& left, Fraction& right)
+bool operator >= (const Fraction& left, const  Fraction& right)
 {
-	left.to_improper(); right.to_improper();
-	left.reduction(); right.reduction();
-	return left.get_numerator() >= right.get_numerator() && left.get_denominator() >= right.get_denominator();
+	return!(left < right);
+	//return left > right || left == right;
 }
-bool operator <= (Fraction& left, Fraction& right)
+bool operator <= (const Fraction& left, const Fraction& right)
 {
-	left.to_improper(); right.to_improper();
-	left.reduction(); right.reduction();
-	return left.get_numerator() <= right.get_numerator() && left.get_denominator() <= right.get_denominator();
+	return!(left > right);
+	//return left < right || left == right;
 }
 Fraction operator* (Fraction left, Fraction right)
 {
@@ -264,7 +258,7 @@ Fraction operator* (Fraction left, Fraction right)
 	(
 		left.get_numerator() * right.get_numerator(),
 		left.get_denominator() * right.get_denominator()
-	).to_proper();
+	).to_proper().reduction();
 }
 Fraction operator/ (const Fraction& left, const Fraction& right)
 {
@@ -291,7 +285,23 @@ Fraction operator- (Fraction left, Fraction right)
 	).to_proper().reduction();
 }
 
+std::ostream& operator<<(std::ostream& os, const Fraction& obj)
+{
+	if (obj.get_integer())os << obj.get_integer();
+	if (obj.get_numerator())
+	{
+		if (obj.get_integer())os << "(";
+		os << obj.get_numerator() << "/" << obj.get_denominator();
+		if (obj.get_integer())os << ")";
+	}
+	else if (obj.get_integer() == 0) os << 0;
+	return os;
+}
+
 //#define CONSTRUCTORS_CHECK
+//#define ARITHMETICAL_OPERATORS_CHECK
+//#define COMPARISON_OPERATORS_CHECK;
+#define STREAM_CHECK
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -315,12 +325,29 @@ void main()
 	F = E;
 	F.print();
 #endif // CONSTRUCTORS_CHECK
+#ifdef ARITHMETICAL_OPERATORS_CHECK
 	Fraction A(1, 1, 2);
 	A.print();
 
-	Fraction B(1, 5, 6);
+	Fraction B(1, 1, 2);
 	B.print();
 
-	bool comparison = A != B;
-	cout << comparison << endl;
+	A *= B;
+	A.print();
+
+	A /= B;
+	A.print();
+#endif // ARITHMETICAL_OPERATORS_CHECK
+#ifdef COMPERISON_OPERATORS_CHECK
+	//cout << (2 == 3) << endl;
+	cout << (Fraction(1, 2) >= Fraction(5, 10)) << endl;
+#endif // COMPERISON_OPERATORS_CHECK
+
+#ifdef STREAM_CHECK
+	Fraction A(2, 3, 4);
+	cout << "¬ведите простую дробь: "; cin >> A;
+	cout << A << endl;
+#endif // STREAM_CHECK
+
+
 }
