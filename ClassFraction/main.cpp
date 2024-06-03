@@ -235,6 +235,30 @@ bool operator != (Fraction& left, Fraction& right)
 	left.reduction();right.reduction();
 	return left.get_numerator() != right.get_numerator() && left.get_denominator() != right.get_denominator();
 }
+bool operator > (Fraction& left, Fraction& right)
+{
+	left.to_improper(); right.to_improper();
+	left.reduction(); right.reduction();
+	return left.get_numerator() > right.get_numerator() && left.get_denominator() > right.get_denominator();
+}
+bool operator < (Fraction& left, Fraction& right)
+{
+	left.to_improper(); right.to_improper();
+	left.reduction(); right.reduction();
+	return left.get_numerator() < right.get_numerator() && left.get_denominator() < right.get_denominator();
+}
+bool operator >= (Fraction& left, Fraction& right)
+{
+	left.to_improper(); right.to_improper();
+	left.reduction(); right.reduction();
+	return left.get_numerator() >= right.get_numerator() && left.get_denominator() >= right.get_denominator();
+}
+bool operator <= (Fraction& left, Fraction& right)
+{
+	left.to_improper(); right.to_improper();
+	left.reduction(); right.reduction();
+	return left.get_numerator() <= right.get_numerator() && left.get_denominator() <= right.get_denominator();
+}
 Fraction operator* (Fraction left, Fraction right)
 {
 	left.to_improper();
