@@ -116,7 +116,7 @@ public:
 		this->integer = integer - rvalue;
 		return *this;
 	}
-	Fraction& operator += (Fraction& right)
+	Fraction& operator += (Fraction right)
 	{
 		Fraction old = *this;
 		old.to_improper();
@@ -154,9 +154,25 @@ public:
 		reduction();
 		return *this;
 	}
-	Fraction& operator *= (Fraction& right)
+	Fraction& operator *= (Fraction right)
 	{
-
+		to_improper(); 
+		right.to_improper();
+		numerator = numerator * right.numerator;
+		denominator = denominator * right.denominator;
+		to_proper();
+		reduction();
+		return *this;
+	}
+	Fraction& operator /= (Fraction& right)
+	{
+		to_improper();
+		right.to_improper();
+		numerator = numerator * right.denominator;
+		denominator = denominator * right.numerator;
+		to_proper();
+		reduction();
+		return *this;
 	}
 
 	//              Methods:
@@ -221,7 +237,7 @@ Fraction operator/ (const Fraction& left, const Fraction& right)
 {
 	return left * right.inverted();
 }
-Fraction operator+ (Fraction& left, Fraction& right)
+Fraction operator+ (Fraction left, Fraction right)
 {
 	left.to_improper();
 	right.to_improper();
@@ -231,7 +247,7 @@ Fraction operator+ (Fraction& left, Fraction& right)
 		left.get_denominator() * right.get_denominator()
 	).to_proper().reduction();
 }
-Fraction operator- (Fraction& left, Fraction& right)
+Fraction operator- (Fraction left, Fraction right)
 {
 	left.to_improper();
 	right.to_improper();
@@ -266,14 +282,14 @@ void main()
 	F = E;
 	F.print();
 #endif // CONSTRUCTORS_CHECK
-	Fraction A(2, 4, 8);
+	Fraction A(1, 1, 2);
 	A.print();
 
-	/*Fraction B(2, 2, 8);
-	B.print();*/
+	Fraction B(2, 2, 4);
+	B.print();
 
-	A /= 2;
-	A.print();
+	B /= A;
+	B.print();
 
 	
 
