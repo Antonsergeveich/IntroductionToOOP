@@ -223,6 +223,18 @@ public:
 	}
 };
 
+bool operator == (Fraction& left, Fraction& right)
+{
+	left.to_improper();right.to_improper();
+	left.reduction();right.reduction();
+	return left.get_numerator() == right.get_numerator() && left.get_denominator() == right.get_denominator();
+}
+bool operator != (Fraction& left, Fraction& right)
+{
+	left.to_improper();right.to_improper();
+	left.reduction();right.reduction();
+	return left.get_numerator() != right.get_numerator() && left.get_denominator() != right.get_denominator();
+}
 Fraction operator* (Fraction left, Fraction right)
 {
 	left.to_improper();
@@ -285,11 +297,11 @@ void main()
 	Fraction A(1, 1, 2);
 	A.print();
 
-	Fraction B(2, 2, 4);
+	Fraction B(1, 5, 6);
 	B.print();
 
-	B /= A;
-	B.print();
+	bool comparison = A != B;
+	cout << comparison << endl;
 
 	
 
