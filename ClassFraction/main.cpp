@@ -165,9 +165,9 @@ public:
 		else more = denominator, less = numerator;
 		do
 		{
-			rest = more % less;
-			more = less;
-			less = rest;
+			rest = more % less;//остаток
+			more = less;//большее
+			less = rest;//меньшее
 		} while (rest);
 		int GCD = more; //GCD - Greatest Common Divesor
 		numerator /= GCD;
