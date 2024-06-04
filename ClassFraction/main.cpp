@@ -6,7 +6,8 @@ using namespace std;
 class Fraction;
 Fraction operator* (Fraction left, Fraction right);
 Fraction operator/ (const Fraction& left, const Fraction& right);
-
+Fraction operator+ (Fraction& left, Fraction& right);
+Fraction operator- (Fraction& left, Fraction& right);
 
 class Fraction
 {
@@ -77,7 +78,7 @@ public:
 	}
 	~Fraction()
 	{
-		cout << "Destructor:\t" << this << endl;
+		cout << "Destructor:\t\t" << this << endl;
 	}
 	//           Operators:
 	Fraction& operator=(const Fraction& other)
@@ -87,6 +88,14 @@ public:
 		this->denominator = other.denominator;
 		cout << "CopyAssignment:\t\t" << this << endl;
 		return *this;
+	}
+	Fraction& operator *= (const Fraction& other)
+	{
+		return *this = *this * other;
+	}
+	Fraction& operator /= (const Fraction& other)
+	{
+		return *this = *this / other;
 	}
 	Fraction& operator++()//Prefix increment
 	{
@@ -120,51 +129,13 @@ public:
 		this->integer = integer - rvalue;
 		return *this;
 	}
-	Fraction& operator += (Fraction right)
+	Fraction& operator += (Fraction& other)
 	{
-		Fraction old = *this;
-		old.to_improper();
-		right.to_improper();
-		numerator = old.numerator * right.denominator + old.denominator * right.numerator;
-		denominator = old.denominator * right.denominator;
-		integer = 0;
-		to_proper();
-		reduction();
-		return old;
+		return *this = *this + other;
 	}
-	Fraction& operator -= (Fraction& right)
+	Fraction& operator -= (Fraction& other)
 	{
-		Fraction old = *this;
-		old.to_improper();
-		right.to_improper();
-		numerator = old.numerator * right.denominator - old.denominator * right.numerator;
-		denominator = old.denominator * right.denominator;
-		integer = 0;
-		to_proper();
-		reduction();
-		return old;
-	}
-	Fraction& operator *= (int rvalue)
-	{
-		to_improper(); numerator = numerator * rvalue;
-		to_proper();
-		reduction();
-		return *this;
-	}
-	Fraction& operator /= (int rvalue)
-	{
-		to_improper(); denominator = denominator * rvalue;
-		to_proper();
-		reduction();
-		return *this;
-	}
-	Fraction& operator *= (const Fraction& other)
-	{
-		return *this = *this * other;
-	}
-	Fraction& operator /= (const Fraction& other)
-	{
-		return *this = *this / other;
+		return *this = *this - other;
 	}
 	//              Methods:
 	Fraction& to_proper()
@@ -188,6 +159,7 @@ public:
 	}
 	Fraction& reduction()
 	{
+		//https://www.webmath.ru/poleznoe/formules_12_7.php
 		int more, less, rest;
 		if (numerator > denominator)more = numerator, less = denominator;
 		else more = denominator, less = numerator;
@@ -264,7 +236,7 @@ Fraction operator/ (const Fraction& left, const Fraction& right)
 {
 	return left * right.inverted();
 }
-Fraction operator+ (Fraction left, Fraction right)
+Fraction operator+ (Fraction& left, Fraction& right)
 {
 	left.to_improper();
 	right.to_improper();
@@ -272,9 +244,10 @@ Fraction operator+ (Fraction left, Fraction right)
 	(
 		(left.get_numerator() * right.get_denominator()) + (left.get_denominator() * right.get_numerator()),
 		left.get_denominator() * right.get_denominator()
-	).to_proper().reduction();
+	).to_proper();
+	
 }
-Fraction operator- (Fraction left, Fraction right)
+Fraction operator- (Fraction& left, Fraction& right)
 {
 	left.to_improper();
 	right.to_improper();
@@ -282,7 +255,7 @@ Fraction operator- (Fraction left, Fraction right)
 	(
 		(left.get_numerator() * right.get_denominator()) - (left.get_denominator() * right.get_numerator()),
 		left.get_denominator() * right.get_denominator()
-	).to_proper().reduction();
+	).to_proper(). reduction();
 }
 
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
@@ -299,9 +272,9 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 }
 
 //#define CONSTRUCTORS_CHECK
-//#define ARITHMETICAL_OPERATORS_CHECK
+#define ARITHMETICAL_OPERATORS_CHECK
 //#define COMPARISON_OPERATORS_CHECK;
-#define STREAM_CHECK
+//#define STREAM_CHECK
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -332,11 +305,30 @@ void main()
 	Fraction B(1, 1, 2);
 	B.print();
 
-	A *= B;
+	/*Fraction C = A / B;
+	C.print();
+	cout << delimeter << endl;
+	(C++).print();
+	cout << delimeter << endl;
+	C.print();
+
 	A.print();
+	B.print();*/
+
+	/*A *= B;
+	cout << "*= "; A.print();
 
 	A /= B;
-	A.print();
+	cout << "/= "; B.print();*/
+
+	A += B;
+	cout << "+= "; A.print();
+
+	A -= B;
+	cout << "-= "; A.print();
+
+
+
 #endif // ARITHMETICAL_OPERATORS_CHECK
 #ifdef COMPERISON_OPERATORS_CHECK
 	//cout << (2 == 3) << endl;
