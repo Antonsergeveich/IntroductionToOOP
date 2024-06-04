@@ -99,11 +99,20 @@ public:
 	}
 	Fraction& operator++()//Prefix increment
 	{
+		// Если переменная возвращается по ссылке, 
+		// то это полноценный объект к которому можно применить операторы 
+		// которые будут его изменять
 		integer++;
 		return *this;
 	}
 	Fraction operator++(int)//Postfix increment
 	{
+		// Если значение возвращается по значению,
+		// на месте вызова создаётся 
+		// ВРЕМЕННЫЙ БЕЗЫМЯННЫЙ ОБЪЕКТ
+		// он существует только в пределах этого выражения где функция вернула значение
+		// Временный безымянный объект является константным
+		// а константу изменить нельзя
 		Fraction old = *this;
 		integer++;
 		return old;
@@ -245,7 +254,7 @@ Fraction operator+ (Fraction& left, Fraction& right)
 		(left.get_numerator() * right.get_denominator()) + (left.get_denominator() * right.get_numerator()),
 		left.get_denominator() * right.get_denominator()
 	).to_proper();
-	
+
 }
 Fraction operator- (Fraction& left, Fraction& right)
 {
@@ -255,7 +264,7 @@ Fraction operator- (Fraction& left, Fraction& right)
 	(
 		(left.get_numerator() * right.get_denominator()) - (left.get_denominator() * right.get_numerator()),
 		left.get_denominator() * right.get_denominator()
-	).to_proper(). reduction();
+	).to_proper().reduction();
 }
 
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
