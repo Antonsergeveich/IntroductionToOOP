@@ -279,11 +279,16 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	else if (obj.get_integer() == 0) os << 0;
 	return os;
 }
+std::istream& operator>>(std::istream& is, const Fraction& obj)
+{
+	is >> obj.get_integer() >> obj.get_numerator() >> obj.get_denominator();
+	return is;
+}
 
 //#define CONSTRUCTORS_CHECK
-#define ARITHMETICAL_OPERATORS_CHECK
+//#define ARITHMETICAL_OPERATORS_CHECK
 //#define COMPARISON_OPERATORS_CHECK;
-//#define STREAM_CHECK
+#define STREAM_CHECK
 void main()
 {
 	setlocale(LC_ALL, "");
