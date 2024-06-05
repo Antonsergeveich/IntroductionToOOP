@@ -1,7 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 using namespace std;
-
-#define delimeter "\n-------------------------------\n"
 
 class Fraction;
 Fraction operator* (Fraction left, Fraction right);
@@ -254,7 +253,6 @@ Fraction operator+ (Fraction& left, Fraction& right)
 		(left.get_numerator() * right.get_denominator()) + (left.get_denominator() * right.get_numerator()),
 		left.get_denominator() * right.get_denominator()
 	).to_proper();
-
 }
 Fraction operator- (Fraction& left, Fraction& right)
 {
@@ -266,7 +264,13 @@ Fraction operator- (Fraction& left, Fraction& right)
 		left.get_denominator() * right.get_denominator()
 	).to_proper().reduction();
 }
-
+//Stream - поток
+//std - Standard namespace
+//:: - SCOPE OPERATOR (Оператор разрешения видимости) позволяет зайти в пространство имён
+//Сам по себе '::' вводит нас в GlobalScope (Глобальное пространство имён)
+//namespace (пространство имён) как папка, а имя, расположенное в нём как файл
+//ostream - output stream (поток вывода)
+//cout - Console Out
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 {
 	if (obj.get_integer())os << obj.get_integer();
@@ -279,9 +283,31 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	else if (obj.get_integer() == 0) os << 0;
 	return os;
 }
-std::istream& operator>>(std::istream& is, const Fraction& obj)
+//istream - input sream (поток ввода)
+//cin - Console In
+std::istream& operator>>(std::istream& is, Fraction& obj)
 {
-	is >> obj.get_integer() >> obj.get_numerator() >> obj.get_denominator();
+	const int SIZE = 32;
+	char buffer[SIZE]{};
+	//is >> buffer;
+	is.getline(buffer, SIZE);
+	int number[3];
+	int n = 0;
+	const char delimiters[] = "(/) +";
+	for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
+		//Функция strtok() разделяет строку на токены: Токен - это то что нужно достать из строки;
+		// Функция strtok() ИЗМЕНЯЕТ ВХОДНУЮ СТРОКУ !!!
+		number[n++] = atoi(pch);
+	//pch - Pointer to Character (Указатель на символ)
+	//Функция atoi() - "ASCII string to int" принимает строку,
+	//и возвращает значение типа int найденное в этой строке;
+	//for (int i = 0; i < n; i++)cout << number[i] << "\t"; cout << endl;
+	switch (n)
+	{
+	case 1: obj = Fraction(number[0]); break;
+	case 2: obj = Fraction(number[0], number[1]); break;
+	case 3: obj = Fraction(number[0], number[1], number[2]); break;
+	}
 	return is;
 }
 
@@ -354,6 +380,4 @@ void main()
 	cout << "Введите простую дробь: "; cin >> A;
 	cout << A << endl;
 #endif // STREAM_CHECK
-
-
 }
