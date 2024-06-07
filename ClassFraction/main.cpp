@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 using namespace std;
 
@@ -49,8 +49,8 @@ public:
 	}
 	explicit Fraction(int integer)
 	{
-		//explicit - явный
-		//implicit - неявный
+		//explicit - СЏРІРЅС‹Р№
+		//implicit - РЅРµСЏРІРЅС‹Р№
 		this->integer = integer;
 		this->numerator = 0;
 		this->denominator = 1;
@@ -100,20 +100,20 @@ public:
 	}
 	Fraction& operator++()//Prefix increment
 	{
-		// Если переменная возвращается по ссылке, 
-		// то это полноценный объект к которому можно применить операторы 
-		// которые будут его изменять
+		// Р•СЃР»Рё РїРµСЂРµРјРµРЅРЅР°СЏ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РїРѕ СЃСЃС‹Р»РєРµ, 
+		// С‚Рѕ СЌС‚Рѕ РїРѕР»РЅРѕС†РµРЅРЅС‹Р№ РѕР±СЉРµРєС‚ Рє РєРѕС‚РѕСЂРѕРјСѓ РјРѕР¶РЅРѕ РїСЂРёРјРµРЅРёС‚СЊ РѕРїРµСЂР°С‚РѕСЂС‹ 
+		// РєРѕС‚РѕСЂС‹Рµ Р±СѓРґСѓС‚ РµРіРѕ РёР·РјРµРЅСЏС‚СЊ
 		integer++;
 		return *this;
 	}
 	Fraction operator++(int)//Postfix increment
 	{
-		// Если значение возвращается по значению,
-		// на месте вызова создаётся 
-		// ВРЕМЕННЫЙ БЕЗЫМЯННЫЙ ОБЪЕКТ
-		// он существует только в пределах этого выражения где функция вернула значение
-		// Временный безымянный объект является константным
-		// а константу изменить нельзя
+		// Р•СЃР»Рё Р·РЅР°С‡РµРЅРёРµ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РїРѕ Р·РЅР°С‡РµРЅРёСЋ,
+		// РЅР° РјРµСЃС‚Рµ РІС‹Р·РѕРІР° СЃРѕР·РґР°С‘С‚СЃСЏ 
+		// Р’Р Р•РњР•РќРќР«Р™ Р‘Р•Р—Р«РњРЇРќРќР«Р™ РћР‘РЄР•РљРў
+		// РѕРЅ СЃСѓС‰РµСЃС‚РІСѓРµС‚ С‚РѕР»СЊРєРѕ РІ РїСЂРµРґРµР»Р°С… СЌС‚РѕРіРѕ РІС‹СЂР°Р¶РµРЅРёСЏ РіРґРµ С„СѓРЅРєС†РёСЏ РІРµСЂРЅСѓР»Р° Р·РЅР°С‡РµРЅРёРµ
+		// Р’СЂРµРјРµРЅРЅС‹Р№ Р±РµР·С‹РјСЏРЅРЅС‹Р№ РѕР±СЉРµРєС‚ СЏРІР»СЏРµС‚СЃСЏ РєРѕРЅСЃС‚Р°РЅС‚РЅС‹Рј
+		// Р° РєРѕРЅСЃС‚Р°РЅС‚Сѓ РёР·РјРµРЅРёС‚СЊ РЅРµР»СЊР·СЏ
 		Fraction old = *this;
 		integer++;
 		return old;
@@ -171,7 +171,7 @@ public:
 	{
 		Fraction inverted = *this;
 		inverted.to_improper();
-		swap(inverted.numerator, inverted.denominator); // swap - меняет местами элементы
+		swap(inverted.numerator, inverted.denominator); // swap - РјРµРЅСЏРµС‚ РјРµСЃС‚Р°РјРё СЌР»РµРјРµРЅС‚С‹
 		return inverted;
 	}
 	Fraction& reduction()
@@ -182,9 +182,9 @@ public:
 		else more = denominator, less = numerator;
 		do
 		{
-			rest = more % less;//остаток
-			more = less;//большее
-			less = rest;//меньшее
+			rest = more % less;//РѕСЃС‚Р°С‚РѕРє
+			more = less;//Р±РѕР»СЊС€РµРµ
+			less = rest;//РјРµРЅСЊС€РµРµ
 		} while (rest);
 		int GCD = more; //GCD - Greatest Common Divesor
 		numerator /= GCD;
@@ -273,12 +273,12 @@ Fraction operator- (Fraction& left, Fraction& right)
 		left.get_denominator() * right.get_denominator()
 	).to_proper().reduction();
 }
-//Stream - поток
+//Stream - РїРѕС‚РѕРє
 //std - Standard namespace
-//:: - SCOPE OPERATOR (Оператор разрешения видимости) позволяет зайти в пространство имён
-//Сам по себе '::' вводит нас в GlobalScope (Глобальное пространство имён)
-//namespace (пространство имён) как папка, а имя, расположенное в нём как файл
-//ostream - output stream (поток вывода)
+//:: - SCOPE OPERATOR (РћРїРµСЂР°С‚РѕСЂ СЂР°Р·СЂРµС€РµРЅРёСЏ РІРёРґРёРјРѕСЃС‚Рё) РїРѕР·РІРѕР»СЏРµС‚ Р·Р°Р№С‚Рё РІ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјС‘РЅ
+//РЎР°Рј РїРѕ СЃРµР±Рµ '::' РІРІРѕРґРёС‚ РЅР°СЃ РІ GlobalScope (Р“Р»РѕР±Р°Р»СЊРЅРѕРµ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјС‘РЅ)
+//namespace (РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјС‘РЅ) РєР°Рє РїР°РїРєР°, Р° РёРјСЏ, СЂР°СЃРїРѕР»РѕР¶РµРЅРЅРѕРµ РІ РЅС‘Рј РєР°Рє С„Р°Р№Р»
+//ostream - output stream (РїРѕС‚РѕРє РІС‹РІРѕРґР°)
 //cout - Console Out
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 {
@@ -292,7 +292,7 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	else if (obj.get_integer() == 0) os << 0;
 	return os;
 }
-//istream - input sream (поток ввода)
+//istream - input sream (РїРѕС‚РѕРє РІРІРѕРґР°)
 //cin - Console In
 std::istream& operator>>(std::istream& is, Fraction& obj)
 {
@@ -304,12 +304,12 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	int n = 0;
 	const char delimiters[] = "(/) +";
 	for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
-		//Функция strtok() разделяет строку на токены: Токен - это то что нужно достать из строки;
-		// Функция strtok() ИЗМЕНЯЕТ ВХОДНУЮ СТРОКУ !!!
+		//Р¤СѓРЅРєС†РёСЏ strtok() СЂР°Р·РґРµР»СЏРµС‚ СЃС‚СЂРѕРєСѓ РЅР° С‚РѕРєРµРЅС‹: РўРѕРєРµРЅ - СЌС‚Рѕ С‚Рѕ С‡С‚Рѕ РЅСѓР¶РЅРѕ РґРѕСЃС‚Р°С‚СЊ РёР· СЃС‚СЂРѕРєРё;
+		// Р¤СѓРЅРєС†РёСЏ strtok() РР—РњР•РќРЇР•Рў Р’РҐРћР”РќРЈР® РЎРўР РћРљРЈ !!!
 		number[n++] = atoi(pch);
-	//pch - Pointer to Character (Указатель на символ)
-	//Функция atoi() - "ASCII string to int" принимает строку,
-	//и возвращает значение типа int найденное в этой строке;
+	//pch - Pointer to Character (РЈРєР°Р·Р°С‚РµР»СЊ РЅР° СЃРёРјРІРѕР»)
+	//Р¤СѓРЅРєС†РёСЏ atoi() - "ASCII string to int" РїСЂРёРЅРёРјР°РµС‚ СЃС‚СЂРѕРєСѓ,
+	//Рё РІРѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ С‚РёРїР° int РЅР°Р№РґРµРЅРЅРѕРµ РІ СЌС‚РѕР№ СЃС‚СЂРѕРєРµ;
 	//for (int i = 0; i < n; i++)cout << number[i] << "\t"; cout << endl;
 	switch (n)
 	{
@@ -322,7 +322,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define CONSTRUCTORS_CHECK
 //#define ARITHMETICAL_OPERATORS_CHECK
 //#define COMPARISON_OPERATORS_CHECK;
-//#define STREAM_CHECK
+#define STREAM_CHECK
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERTIONS_FROM_OTHER_TO_CLASS
 #define CONVERTIONS_FROM_CLASS_TO_OTHER
@@ -387,7 +387,7 @@ void main()
 #endif // COMPERISON_OPERATORS_CHECK
 #ifdef STREAM_CHECK
 	Fraction A(2, 3, 4);
-	cout << "Введите простую дробь: "; cin >> A;
+	cout << "Р’РІРµРґРёС‚Рµ РїСЂРѕСЃС‚СѓСЋ РґСЂРѕР±СЊ: "; cin >> A;
 	cout << A << endl;
 #endif // STREAM_CHECK
 

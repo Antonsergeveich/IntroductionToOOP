@@ -36,5 +36,6 @@ void main()
 	String str2 = "World";
 	cout << str1 << endl;
 	cout << str2 << endl;
-
+	String str3 = str1 + str2;
+	cout << str3 << endl; //HelloWorld
 }
