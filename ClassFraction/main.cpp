@@ -47,8 +47,10 @@ public:
 		denominator = 1;
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
+		//explicit - явный
+		//implicit - неявный
 		this->integer = integer;
 		this->numerator = 0;
 		this->denominator = 1;
@@ -116,6 +118,7 @@ public:
 		integer++;
 		return old;
 	}
+
 	Fraction& operator--()//Prefix decrement
 	{
 		integer--;
@@ -145,6 +148,12 @@ public:
 	{
 		return *this = *this - other;
 	}
+	//Type-cast operators:
+	explicit operator int()
+	{
+		return integer;
+	}
+
 	//              Methods:
 	Fraction& to_proper()
 	{
@@ -310,11 +319,13 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	}
 	return is;
 }
-
 //#define CONSTRUCTORS_CHECK
 //#define ARITHMETICAL_OPERATORS_CHECK
 //#define COMPARISON_OPERATORS_CHECK;
-#define STREAM_CHECK
+//#define STREAM_CHECK
+//#define TYPE_CONVERSIONS_BASICS
+//#define CONVERTIONS_FROM_OTHER_TO_CLASS
+#define CONVERTIONS_FROM_CLASS_TO_OTHER
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -374,10 +385,24 @@ void main()
 	//cout << (2 == 3) << endl;
 	cout << (Fraction(1, 2) >= Fraction(5, 10)) << endl;
 #endif // COMPERISON_OPERATORS_CHECK
-
 #ifdef STREAM_CHECK
 	Fraction A(2, 3, 4);
 	cout << "Введите простую дробь: "; cin >> A;
 	cout << A << endl;
 #endif // STREAM_CHECK
+
+#ifdef CONVERSTIONS_TASK_1
+	Fraction A(2, 3, 4);
+	cout << A << endl;
+
+	int a = (int)A;
+	double a = A;
+	cout << a << endl;
+#endif // CONVERSTIONS_TASK_1
+
+#ifdef CONVERTION_TASK_2
+	Fraction B = 2, 75;
+	cout << B << endl;
+#endif // CONVERTION_TASK_2
+
 }
