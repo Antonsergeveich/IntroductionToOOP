@@ -309,7 +309,8 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	const int SIZE = 32;
 	char buffer[SIZE]{};
 	//is >> buffer;
-	is.getline(buffer, SIZE);
+	is.getline(buffer, SIZE);// Если мы хотим вводить через пробел
+	//то нужно написать функцию getline()
 	int number[3];
 	int n = 0;
 	const char delimiters[] = "(/) +";
@@ -339,7 +340,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERTIONS_FROM_OTHER_TO_CLASS
 //#define CONVERTIONS_FROM_CLASS_TO_OTHER
-//#define CONVERSIONS_TASK_1
+#define CONVERSIONS_TASK_1
 //#define CONVERSIONS_TASK_2
 
 void main()
@@ -445,7 +446,7 @@ void main()
 
 	cout << double_delimiter << endl;
 #endif // CONVERSIONS_FROM_OTHER_TO_CLASS
-#ifdef CONVERSTIONS_TASK_1
+#ifdef CONVERSIONS_TASK_1
 	Fraction A(2, 3, 4);
 	cout << A << endl;
 
