@@ -50,14 +50,32 @@ public:
 		denominator = 1;
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	explicit Fraction(int integer)//Single-argument Constructor
+	//explicit Fraction(int integer)//Single-argument Constructor
+	//{
+	//	//explicit - явный
+	//	//implicit - неявный
+	//	this->integer = integer;
+	//	this->numerator = 0;
+	//	this->denominator = 1;
+	//	cout << "1ArgConstructor:\t" << this << endl;
+	//}
+	explicit Fraction(double value)//Single-argument Constructor
 	{
-		//explicit - явный
-		//implicit - неявный
-		this->integer = integer;
-		this->numerator = 0;
-		this->denominator = 1;
-		cout << "1ArgConstructor:\t" << this << endl;
+		this->integer = (int)value;
+		double x = value - integer;
+		int y = x;
+		denominator = 10;
+		while (x - y >= 0.0000001)
+		{
+			x = x * 10;
+			y = x;
+
+			if (x - y <= 0.0000001)break;
+			denominator *= denominator;
+		}
+		this->numerator = x;
+		this->denominator = denominator;
+		cout << "2ArgConstructor:\t" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
 	{
@@ -173,6 +191,7 @@ public:
 		a = (double)numerator / denominator;
 		return a;
 	}
+
 
 	//              Methods:
 	Fraction& to_proper()
@@ -350,8 +369,8 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERSIONS_FROM_OTHER_TO_CLASS
 //#define CONVERTIONS_FROM_CLASS_TO_OTHER
-#define CONVERSIONS_TASK_1
-//#define CONVERSIONS_TASK_2
+//#define CONVERSIONS_TASK_1
+#define CONVERSIONS_TASK_2
 
 void main()
 {
@@ -459,9 +478,9 @@ void main()
 	//int a = (int)A;
 	double a = double(A);
 	cout << a << endl;
-#endif // CONVERSTIONS_TASK_1
-#ifdef CONVERTION_TASK_2
-	Fraction B = 2, 75;
+#endif // CONVERTIONS_TASK_1
+#ifdef CONVERSIONS_TASK_2
+	Fraction B = (Fraction)2.75;
 	cout << B << endl;
-#endif // CONVERTION_TASK_2
+#endif // CONVERSION_TASK_2
 }
