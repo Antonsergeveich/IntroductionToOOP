@@ -149,6 +149,16 @@ public:
 		return *this = *this - other;
 	}
 	//Type-cast operators:
+	/*
+	--------------------------------------------
+	operator type()
+	{
+		.....;
+		.....;
+		return value;
+	}
+	--------------------------------------------
+	*/
 	explicit operator int()
 	{
 		return integer;
@@ -292,10 +302,10 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	else if (obj.get_integer() == 0) os << 0;
 	return os;
 }
-//istream - input sream (поток ввода)
-//cin - Console In
 std::istream& operator>>(std::istream& is, Fraction& obj)
 {
+	//istream - input sream (поток ввода)
+	//cin - Console In
 	const int SIZE = 32;
 	char buffer[SIZE]{};
 	//is >> buffer;
@@ -305,10 +315,12 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	const char delimiters[] = "(/) +";
 	for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
 		//Функция strtok() разделяет строку на токены: Токен - это то что нужно достать из строки;
+		//https://legacy.cplusplus.com/reference/cstring/strtok/
 		// Функция strtok() ИЗМЕНЯЕТ ВХОДНУЮ СТРОКУ !!!
 		number[n++] = atoi(pch);
 	//pch - Pointer to Character (Указатель на символ)
 	//Функция atoi() - "ASCII string to int" принимает строку,
+	//https://legacy.cplusplus.com/reference/cstdlib/atoi/
 	//и возвращает значение типа int найденное в этой строке;
 	//for (int i = 0; i < n; i++)cout << number[i] << "\t"; cout << endl;
 	switch (n)
@@ -319,13 +331,17 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	}
 	return is;
 }
+
 //#define CONSTRUCTORS_CHECK
 //#define ARITHMETICAL_OPERATORS_CHECK
 //#define COMPARISON_OPERATORS_CHECK;
-#define STREAM_CHECK
+//#define STREAM_CHECK
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERTIONS_FROM_OTHER_TO_CLASS
-#define CONVERTIONS_FROM_CLASS_TO_OTHER
+//#define CONVERTIONS_FROM_CLASS_TO_OTHER
+//#define CONVERSIONS_TASK_1
+//#define CONVERSIONS_TASK_2
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -350,38 +366,38 @@ void main()
 	F.print();
 #endif // CONSTRUCTORS_CHECK
 #ifdef ARITHMETICAL_OPERATORS_CHECK
-	Fraction A(1, 1, 2);
+	//double a = 2;
+	//double b = 3;
+	//double c = a * b;
+
+	Fraction A(2, 3, 4);
 	A.print();
 
-	Fraction B(1, 1, 2);
+	Fraction B(3, 4, 5);
 	B.print();
 
 	/*Fraction C = A / B;
 	C.print();
-	cout << delimeter << endl;
 	(C++).print();
-	cout << delimeter << endl;
 	C.print();
 
 	A.print();
 	B.print();*/
 
-	/*A *= B;
-	cout << "*= "; A.print();
+	A *= B;		//A = A*B;
+	A.print();
 
 	A /= B;
-	cout << "/= "; B.print();*/
+	A.print();
 
-	A += B;
-	cout << "+= "; A.print();
-
-	A -= B;
-	cout << "-= "; A.print();
-
-
-
+	//int a = 2;
+	//int* pa = &a;
+	////a = pa;
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++a;
+	////a++++++++++++++++++++++++++++++++++++++++++++++++++++++++++;
+	//cout << a << endl;  
 #endif // ARITHMETICAL_OPERATORS_CHECK
-#ifdef COMPERISON_OPERATORS_CHECK
+#ifdef COMPARISON_OPERATORS_CHECK
 	//cout << (2 == 3) << endl;
 	cout << (Fraction(1, 2) >= Fraction(5, 10)) << endl;
 #endif // COMPERISON_OPERATORS_CHECK
@@ -390,7 +406,45 @@ void main()
 	cout << "Введите простую дробь: "; cin >> A;
 	cout << A << endl;
 #endif // STREAM_CHECK
+#ifdef TYPE_CONVERSIONS_BASICS
+	//(type)value;	C-like notation		(C-подобная форма записи)
+	//type(value);	Functional notation	(Функицональная форма записи)
+	//int a = 2.5;
+	//C4244: Conversion from 'type_1' to 'type_2', possible loss of data;
+	//		l-value = r-value;
 
+	int a = 2;		//No conversions
+	double b = 3;	//Conversion from less to more
+	int c = b;		//Conversion from more to less without data loss
+	int d = 2.5;	//Conversion from more to less with data loss
+	cout << sizeof(int) << endl;
+	cout << sizeof(double) << endl;
+#endif // TYPE_CONVERSIONS_BASICS
+#ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
+	/*
+----------------------------------
+1. From other to Class:
+	- Single-argument constructor;
+	- CopyAssignment;
+2. From Class to other;
+----------------------------------
+*/
+	Fraction A = (Fraction)5;	//Convertion from 'int' to 'Fraction'
+	//Single-Argument constructor
+	cout << A << endl;
+
+	cout << double_delimiter << endl;
+
+	Fraction B;	//Default constructor
+	cout << delimiter << endl;
+	B = Fraction(8);		//Convertion from 'int' to Fraction
+	//Single-Argument constructor
+	//Copy assignment
+	cout << delimiter << endl;
+	cout << B << endl;
+
+	cout << double_delimiter << endl;
+#endif // CONVERSIONS_FROM_OTHER_TO_CLASS
 #ifdef CONVERSTIONS_TASK_1
 	Fraction A(2, 3, 4);
 	cout << A << endl;
@@ -399,10 +453,8 @@ void main()
 	double a = A;
 	cout << a << endl;
 #endif // CONVERSTIONS_TASK_1
-
 #ifdef CONVERTION_TASK_2
 	Fraction B = 2, 75;
 	cout << B << endl;
 #endif // CONVERTION_TASK_2
-
 }
