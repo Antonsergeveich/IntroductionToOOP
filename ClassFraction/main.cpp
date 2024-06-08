@@ -2,6 +2,9 @@
 #include<iostream>
 using namespace std;
 
+#define delimiter "\n---------------------------------\n"
+#define double_delimiter "\n================================\n"
+
 class Fraction;
 Fraction operator* (Fraction left, Fraction right);
 Fraction operator/ (const Fraction& left, const Fraction& right);
@@ -47,7 +50,7 @@ public:
 		denominator = 1;
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	explicit Fraction(int integer)
+	explicit Fraction(int integer)//Single-argument Constructor
 	{
 		//explicit - явный
 		//implicit - неявный
@@ -162,6 +165,13 @@ public:
 	explicit operator int()
 	{
 		return integer;
+	}
+	explicit operator double()
+	{
+		double a;
+		to_improper();
+		a = (double)numerator / denominator;
+		return a;
 	}
 
 	//              Methods:
@@ -338,7 +348,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define COMPARISON_OPERATORS_CHECK;
 //#define STREAM_CHECK
 //#define TYPE_CONVERSIONS_BASICS
-//#define CONVERTIONS_FROM_OTHER_TO_CLASS
+//#define CONVERSIONS_FROM_OTHER_TO_CLASS
 //#define CONVERTIONS_FROM_CLASS_TO_OTHER
 #define CONVERSIONS_TASK_1
 //#define CONVERSIONS_TASK_2
@@ -433,9 +443,7 @@ void main()
 	Fraction A = (Fraction)5;	//Convertion from 'int' to 'Fraction'
 	//Single-Argument constructor
 	cout << A << endl;
-
 	cout << double_delimiter << endl;
-
 	Fraction B;	//Default constructor
 	cout << delimiter << endl;
 	B = Fraction(8);		//Convertion from 'int' to Fraction
@@ -443,15 +451,13 @@ void main()
 	//Copy assignment
 	cout << delimiter << endl;
 	cout << B << endl;
-
 	cout << double_delimiter << endl;
 #endif // CONVERSIONS_FROM_OTHER_TO_CLASS
 #ifdef CONVERSIONS_TASK_1
 	Fraction A(2, 3, 4);
 	cout << A << endl;
-
-	int a = (int)A;
-	double a = A;
+	//int a = (int)A;
+	double a = double(A);
 	cout << a << endl;
 #endif // CONVERSTIONS_TASK_1
 #ifdef CONVERTION_TASK_2
