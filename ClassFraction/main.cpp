@@ -50,15 +50,15 @@ public:
 		denominator = 1;
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	//explicit Fraction(int integer)//Single-argument Constructor
-	//{
-	//	//explicit - явный
-	//	//implicit - неявный
-	//	this->integer = integer;
-	//	this->numerator = 0;
-	//	this->denominator = 1;
-	//	cout << "1ArgConstructor:\t" << this << endl;
-	//}
+	explicit Fraction(int integer)//Single-argument Constructor
+	{
+		//explicit - явный
+		//implicit - неявный
+		this->integer = integer;
+		this->numerator = 0;
+		this->denominator = 1;
+		cout << "1ArgConstructor:\t" << this << endl;
+	}
 	explicit Fraction(double value)//Single-argument Constructor
 	{
 		this->integer = (int)value;
@@ -69,7 +69,6 @@ public:
 		{
 			x = x * 10;
 			y = x;
-
 			if (x - y <= 0.0000001)break;
 			denominator *= denominator;
 		}
@@ -369,7 +368,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERSIONS_FROM_OTHER_TO_CLASS
 //#define CONVERTIONS_FROM_CLASS_TO_OTHER
-//#define CONVERSIONS_TASK_1
+#define CONVERSIONS_TASK_1
 #define CONVERSIONS_TASK_2
 
 void main()
