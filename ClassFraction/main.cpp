@@ -59,7 +59,7 @@ public:
 		this->denominator = 1;
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
-	explicit Fraction(double value)//Single-argument Constructor
+	explicit Fraction( const double value)//Single-argument Constructor
 	{
 		this->integer = (int)value;
 		double x = value - integer;
@@ -368,7 +368,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERSIONS_FROM_OTHER_TO_CLASS
 //#define CONVERTIONS_FROM_CLASS_TO_OTHER
-#define CONVERSIONS_TASK_1
+//#define CONVERSIONS_TASK_1
 #define CONVERSIONS_TASK_2
 
 void main()
