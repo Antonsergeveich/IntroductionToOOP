@@ -1,8 +1,9 @@
 ﻿#include<iostream>
 using namespace std;
 
-int strlength(const char* str);
-//std::ostream& operator<<(std::ostream& os, const String& str);
+class String;
+//int strlength(const char* str);
+std::ostream& operator << (std::ostream& os, const String& obj);
 
 class String
 {
@@ -18,7 +19,7 @@ public:
 	}
 	String(const char* str)
 	{
-		int size = strlength(str);
+		int size = strlen(str);
 		this->str = new char[size + 1];
 		for (int i = 0; i < size; i++)
 		{
@@ -48,7 +49,11 @@ public:
 		cout << "Str:\t" << str << endl;
 	}
 };
-
+std::ostream& operator << (std::ostream& os, const String& obj)
+{
+	os << obj.get_str();
+	return os;
+}
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -61,13 +66,9 @@ void main()
 	//String str3 = str1 + str2;
 	//cout << str3 << endl; //HelloWorld
 }
-std::ostream& operator << (std::ostream& os, const String& obj)
-{
-	os << obj.get_str();
-	return os;
-}
 
-int strlength(const char* str)
-{
-	for (int i = 0; str[i] != '\0'; i++)return i;
-}
+
+//int strlength(const char* str)
+//{
+//	for (int i = 0; str[i] != '\0'; i++)return i;
+//}

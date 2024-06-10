@@ -59,23 +59,33 @@ public:
 		this->denominator = 1;
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
-	explicit Fraction(  double value)//Single-argument Constructor
+	Fraction(double decimal)
 	{
-		this->integer = (int)value;
-		double x = value - integer;
-		int y = x;
-		denominator = 10;
-		while (x - y >= 0.0000001)
-		{
-			x = x * 10;
-			y = x;
-			if (x - y <= 0.0000001)break;
-			denominator *= denominator;
-		}
-		this->numerator = x;
-		this->denominator = denominator;
-		cout << "2ArgConstructor:\t" << this << endl;
+		integer = decimal;
+		decimal -= integer;
+		denominator = 1e+9;// означает $1 000 000 000, один и девять нулей после единицы
+		// потомучто int 4 294 967 295(в этом числе 9 разрядов которые изменяются от 0 до 9) 
+		numerator = decimal * denominator;
+		reduction();
+		cout << "Consttructor:\t" << this << endl;
 	}
+	//explicit Fraction(double value)//Single-argument Constructor
+	//{
+	//	this->integer = (int)value;
+	//	double x = value - integer;
+	//	int y = x;
+	//	denominator = 10;
+	//	while (x - y >= 0.0000001)
+	//	{
+	//		x = x * 10;
+	//		y = x;
+	//		if (x - y <= 0.0000001)break;
+	//		denominator *= denominator;
+	//	}
+	//	this->numerator = x;
+	//	this->denominator = denominator;
+	//	cout << "2ArgConstructor:\t" << this << endl;
+	//}
 	Fraction(int numerator, int denominator)
 	{
 		this->integer = 0;
@@ -185,12 +195,12 @@ public:
 	}
 	explicit operator double()
 	{
-		double a;
+		return integer + (double)numerator / denominator;
+		/*double a;
 		to_improper();
 		a = (double)numerator / denominator;
-		return a;
+		return a;*/
 	}
-
 
 	//              Methods:
 	Fraction& to_proper()
