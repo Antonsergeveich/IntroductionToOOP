@@ -2,6 +2,7 @@
 using namespace std;
 
 int strlength(const char* str);
+//std::ostream& operator<<(std::ostream& os, const String& str);
 
 class String
 {
@@ -18,12 +19,13 @@ public:
 	String(const char* str)
 	{
 		int size = strlength(str);
-		this->str = new char[size+1];
+		this->str = new char[size + 1];
 		for (int i = 0; i < size; i++)
 		{
 			this->str[i] = str[i];
 		}
 		this->str[size] = '\0';
+		cout << "1ArgConstructor:\t\t" << this << endl;
 	}
 	~String()
 	{
@@ -32,9 +34,13 @@ public:
 	}
 
 	//             Methods:
-	char get_str()const
+    char* get_str()const
 	{
-		return *str;
+		return str;
+	}
+	int get_size()const
+	{
+		return size;
 	}
 	void print()const
 	{
@@ -52,21 +58,15 @@ void main()
 	String str2 = "World";
 	cout << str1 << endl;
 	cout << str2 << endl;
-	String str3 = str1 + str2;
-	cout << str3 << endl; //HelloWorld
+	//String str3 = str1 + str2;
+	//cout << str3 << endl; //HelloWorld
 }
-
-String operator + ( const String& left,  String& right)
+std::ostream& operator << (std::ostream& os, const String& obj)
 {
-	int l = left.get_str();
-	int r = right.get_str();
-	String str_new = new char[l+r+1];
-	for (int i = 0; i < l; i++)
-	{
-		str_new[i] = left[i];
-
-	}
+	os << obj.get_str();
+	return os;
 }
+
 int strlength(const char* str)
 {
 	for (int i = 0; str[i] != '\0'; i++)return i;
