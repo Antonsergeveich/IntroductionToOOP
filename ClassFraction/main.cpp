@@ -59,7 +59,7 @@ public:
 		this->denominator = 1;
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
-	explicit Fraction( const double value)//Single-argument Constructor
+	explicit Fraction(  double value)//Single-argument Constructor
 	{
 		this->integer = (int)value;
 		double x = value - integer;
