@@ -1,4 +1,5 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+﻿#define _USE_MATH_DEFINES
+#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 using namespace std;
 
@@ -61,9 +62,11 @@ public:
 	}
 	Fraction(double decimal)
 	{
+		decimal += 1e-10; // 0,0000000001 те разряды которые мы хотим сохранить
+		//выравняются до того значения которое нам нужно 
 		integer = decimal;
 		decimal -= integer;
-		denominator = 1e+9;// означает $1 000 000 000, один и девять нулей после единицы
+		denominator = 1e+9;// означает 1 000 000 000, один и девять нулей после единицы
 		// потомучто int 4 294 967 295(в этом числе 9 разрядов которые изменяются от 0 до 9) 
 		numerator = decimal * denominator;
 		reduction();
@@ -75,11 +78,11 @@ public:
 	//	double x = value - integer;
 	//	int y = x;
 	//	denominator = 10;
-	//	while (x - y >= 0.0000001)
+	//	while (x - y >= 0.0000000001)
 	//	{
 	//		x = x * 10;
 	//		y = x;
-	//		if (x - y <= 0.0000001)break;
+	//		if (x - y <= 0.0000000001)break;
 	//		denominator *= denominator;
 	//	}
 	//	this->numerator = x;
@@ -489,7 +492,7 @@ void main()
 	cout << a << endl;
 #endif // CONVERTIONS_TASK_1
 #ifdef CONVERSIONS_TASK_2
-	Fraction B = (Fraction)2.75;
+	Fraction B = (Fraction)3.14;
 	cout << B << endl;
 #endif // CONVERSION_TASK_2
 }
