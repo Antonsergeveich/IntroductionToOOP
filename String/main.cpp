@@ -17,7 +17,14 @@ public:
 		this->str = new char[size] {};
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	String(const char* str)
+	String(const char str[])
+	{
+		this->size = strlen(str) + 1;
+		this->str = new char[size] {};
+		for (int i = 0; str[i]; i++)this->str[i] = str[i];
+		cout << "Constructor:\t\t" << this << endl;
+	}
+	/*String(const char* str)
 	{
 		int size = strlen(str);
 		this->str = new char[size + 1];
@@ -27,7 +34,7 @@ public:
 		}
 		this->str[size] = '\0';
 		cout << "1ArgConstructor:\t\t" << this << endl;
-	}
+	}*/
 	~String()
 	{
 		delete[]this->str;
@@ -35,7 +42,7 @@ public:
 	}
 
 	//             Methods:
-    char* get_str()const
+    const char* get_str()const
 	{
 		return str;
 	}
@@ -51,8 +58,7 @@ public:
 };
 std::ostream& operator << (std::ostream& os, const String& obj)
 {
-	os << obj.get_str();
-	return os;
+	return os<< obj.get_str();
 }
 void main()
 {
