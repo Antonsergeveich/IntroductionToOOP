@@ -73,14 +73,14 @@ public:
 };
 String operator + (const String& left, const String& right)
 {
-	String sum(left.get_size() + right.get_size());
+	String sum(left.get_size() + right.get_size() - 1);
 	for (int i = 0; i < left.get_size(); i++)
 	{
 		sum.get_str()[i] = left.get_str()[i];
 	}
 	for (int i = 0; i < right.get_size(); i++)
 	{
-		sum.get_str()[i + left.get_size()] = right.get_str()[i];
+		sum.get_str()[i + left.get_size() - 1] = right.get_str()[i];
 	}
 	return sum;
 }
@@ -91,9 +91,8 @@ std::ostream& operator << (std::ostream& os, const String& obj)
 void main()
 {
 	setlocale(LC_ALL, "");
-	/*String str;
-	str.print();*/
-	String str1 = "Hello";
+	String str; str.print();//Default Constructor
+	String str1 = "Hello";//Single-argument Constructor
 	String str2 = "World";
 	cout << str1 << endl;
 	cout << str2 << endl;
