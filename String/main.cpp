@@ -15,7 +15,7 @@ class String
 	char* str;//Адрес строки в динамической памяти
 public:
 	//             Constructors:
-	String(int size = 80) //size - параметр по умолчанию
+    explicit String(int size = 80) //size - параметр по умолчанию
 	{
 		this->size = size; // c помощью size можно создать строку нужного размера
 		this->str = new char[size] {};
@@ -23,13 +23,15 @@ public:
 	}
 	String(const char str[])
 	{
-		this->size = strlen(str) + 1; //strlen() - функция которая считает размер строки в байтах без '\0'
+		this->size = strlen(str) + 1; //размер строки в байтах с учётом терменирующего нуля, поэтому + 1;
+		//strlen() - функция которая считает размер строки в символах без терменирующего нуля '\0'
 		this->str = new char[size] {};
 		for (int i = 0; str[i]; i++)this->str[i] = str[i];
 		cout << "Constructor:\t\t" << this << endl;
 	}
 	String(const String& other)
 	{
+		//Deep copy
 		this->size = other.size;
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)
@@ -38,23 +40,25 @@ public:
 		}
 		cout << "CopyConstructor:\t\t" << this << endl;
 	}
-	/*String(const char* str)
-	{
-		int size = strlen(str);
-		this->str = new char[size + 1];
-		for (int i = 0; i < size; i++)
-		{
-			this->str[i] = str[i];
-		}
-		this->str[size] = '\0';
-		cout << "1ArgConstructor:\t\t" << this << endl;
-	}*/
 	~String()
 	{
 		delete[]this->str;
 		cout << "Destructor:\t\t" << this << endl;
 	}
-
+	//           Operators:
+	String& operator = (const String& other)
+	{
+		if (this == &other)return *this;
+		delete[] this->str;
+		this->size = other.size;
+		this->str = new char[size] {};
+		for (int i = 0; i < size; i++)
+		{
+			this->str[i] = other.str[i];
+		}
+		cout << "CopyAssignment:\t\t" << this << endl;
+		return *this;
+	}
 	//             Methods:
 	const char* get_str()const
 	{
@@ -65,46 +69,51 @@ public:
 		return str;
 	}
 
-	int get_size()const
+    int get_size()const
 	{
 		return size;
 	}
 	void print()const
 	{
+		cout << "Obj:\t" << this << endl;
 		cout << "Size:\t" << size << endl;
+		cout << "Addr:\t" << &str << endl;
 		cout << "Str:\t" << str << endl;
 	}
 };
 String operator + (const String& left, const String& right)
 {
-	String sum(left.get_size() + right.get_size() - 1);
+	String buffer (left.get_size() + right.get_size() - 1);
 	for (int i = 0; i < left.get_size(); i++)
 	{
-		sum.get_str()[i] = left.get_str()[i];
+		buffer.get_str()[i] = left.get_str()[i];
 	}
 	for (int i = 0; i < right.get_size(); i++)
 	{
-		sum.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+		buffer.get_str()[i + left.get_size() - 1] = right.get_str()[i];
 	}
-	return sum;
+	return buffer;
 }
 std::ostream& operator << (std::ostream& os, const String& obj)
 {
 	return os << obj.get_str();
 }
+
 void main()
 {
 	setlocale(LC_ALL, "");
-	String str; str.print();//Default Constructor
-	String str1 = "Hello";//Single-argument Constructor
+	//String str; str.print(); //Default Constructor
+	String str1 = "Hello"; //Single-argument Constructor
 	String str2 = "World";
-	cout << "strlengh = " << strlength("Helloooooooo");
-	cout << endl;
+	/*cout << "strlengh = " << strlength("Helloooooooo");
+	cout << endl;*/
 	cout << str1 << endl;
 	cout << str2 << endl;
-	String str3 = str1 + str2;
-	cout << str3 << endl; //HelloWorld
-
+	str1 = str1;
+	String str3 = str1 + " " + str2; // С пробелом;
+	str3.print();//CopyConstructor
+	str3 = str1 + str2;  //CopyAssigment
+	str3.print();
 }
 
 int strlength(const char* str)
