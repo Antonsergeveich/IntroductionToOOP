@@ -21,6 +21,22 @@ public:
 	{
 		return cols;
 	}
+	int get_arrij(int i, int j)
+	{
+		return arr[i][j];
+	}
+	void set_rows(int rows)
+	{
+		this->rows = rows;
+	}
+	void set_cols(int cols)
+	{
+		this->cols = cols;
+	}
+	void set_arrij(int i, int j, int value)
+	{
+		arr[i][j] = value;
+	}
 	Matrix()
 	{
 		rows = 0;
