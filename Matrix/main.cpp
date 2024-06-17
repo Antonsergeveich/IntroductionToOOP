@@ -1,9 +1,11 @@
-#include<iostream>
+﻿#include<iostream>
 using namespace std;
 
 using std::cout;
 using std::cin;
 using std::endl;
+
+class Matrix;
 
 class Matrix
 {
@@ -19,7 +21,7 @@ public:
 	{
 		return cols;
 	}
-	Matrix(int rows, int cols)
+	Matrix( const int rows, const int cols)
 	{
 		this->rows = rows;
 		this->cols = cols;
@@ -42,10 +44,33 @@ public:
 		arr = nullptr;
 		cout << "Destructor:\t" << this << endl;
 	}
+	void FillRand()const
+	{
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < cols; j++)
+			{
+				arr[i][j] = rand() % 100;
+			}
+		}
+	}
+	void print()const
+	{
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < cols; j++)
+			{
+				cout << arr[i][j] << "\t";
+			}
+			cout << endl;
+		}
+	}
 };
 
 void main()
 {
 	setlocale(LC_ALL, "");
-
+	Matrix M(4, 5);
+	M.FillRand();
+	M.print();
 }
