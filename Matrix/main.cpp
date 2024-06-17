@@ -6,6 +6,7 @@ using std::cin;
 using std::endl;
 
 class Matrix;
+Matrix operator + (Matrix& left, Matrix& right);
 
 class Matrix
 {
@@ -37,11 +38,19 @@ public:
 	{
 		arr[i][j] = value;
 	}
+	void set_arr()
+	{
+		arr = new int* [rows];
+		for (int i = 0; i < rows; i++)
+		{
+			arr[i] = new int [cols] {};
+		}
+	}
 	Matrix()
 	{
 		rows = 0;
 		cols = 0;
-		arr = nullptr;
+		arr = nullptr; // обнуляем указатель чтобы он никуда не указывал во избежании Debag Assertion Failed 
 		cout << "DefaultConstructor\t" << this << endl;
 	}
 	Matrix(int rows, int cols)
@@ -123,16 +132,40 @@ public:
 		}
 	}
 };
+Matrix operator + (Matrix& left, Matrix& right)
+{
+	Matrix buffer;
+	if (left.get_rows() == right.get_rows() && left.get_cols() == right.get_cols())
+	{
+		buffer.set_rows(left.get_rows());
+		buffer.set_cols(left.get_cols());
+		buffer.set_arr();
+		
+		for (int i = 0; i < buffer.get_rows(); i++)
+		{
+			for (int j = 0; j < buffer.get_cols(); j++)
+			{
+				buffer.set_arrij(i, j, left.get_arrij(i, j) + right.get_arrij(i, j));
+			}
+		}
+	}
+	return buffer;
+}
 
 void main()
 {
 	setlocale(LC_ALL, "");
-	Matrix A(2, 3);
+	Matrix A(3, 4);
 	A.FillRand();
 	A.print();
+	//cout << A.get_arrij(2, 3)<<endl;
 	Matrix B(A);
-	B.print();
+	/*B.print();
 	Matrix C;
 	C = B;
-	C.print();
+	C.print();*/
+	Matrix D;
+	D = A + B;
+	D.print();
+
 }
