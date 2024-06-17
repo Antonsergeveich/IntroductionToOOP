@@ -5,8 +5,12 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+#define delimeter "\n-------------------------------\n"
+
 class Matrix;
 Matrix operator + (Matrix& left, Matrix& right);
+Matrix operator - (Matrix& left, Matrix& right);
+Matrix operator * (Matrix& left, Matrix& right);
 
 class Matrix
 {
@@ -38,6 +42,10 @@ public:
 	{
 		arr[i][j] = value;
 	}
+	void set_arrij(int i, int j, double value)
+	{
+		arr[i][j] = value;
+	}
 	void set_arr()
 	{
 		arr = new int* [rows];
@@ -50,7 +58,7 @@ public:
 	{
 		rows = 0;
 		cols = 0;
-		arr = nullptr; // обнуляем указатель чтобы он никуда не указывал во избежании Debag Assertion Failed 
+		arr = nullptr;  
 		cout << "DefaultConstructor\t" << this << endl;
 	}
 	Matrix(int rows, int cols)
@@ -132,6 +140,38 @@ public:
 		}
 	}
 };
+
+void main()
+{
+	setlocale(LC_ALL, "");
+	Matrix A(3, 4);
+	A.FillRand();
+	A.print();
+    cout << delimeter << endl;
+	cout << A.get_arrij(2, 3)<<endl;
+    cout << delimeter << endl;
+	Matrix B(A);
+	B.print();
+    cout << delimeter << endl;
+	Matrix C;
+	C = B;
+	C.print();
+    cout << delimeter << endl;
+	Matrix D;
+	D = A + B;
+	D.print();
+    cout << delimeter << endl;
+	Matrix E;
+	E = D - A;
+	E.print();
+    cout << delimeter << endl;
+	Matrix F;
+	F = A * B;
+	F.print();
+    cout << delimeter << endl;
+	
+}
+
 Matrix operator + (Matrix& left, Matrix& right)
 {
 	Matrix buffer;
@@ -151,21 +191,52 @@ Matrix operator + (Matrix& left, Matrix& right)
 	}
 	return buffer;
 }
-
-void main()
+Matrix operator - (Matrix& left, Matrix& right)
 {
-	setlocale(LC_ALL, "");
-	Matrix A(3, 4);
-	A.FillRand();
-	A.print();
-	//cout << A.get_arrij(2, 3)<<endl;
-	Matrix B(A);
-	/*B.print();
-	Matrix C;
-	C = B;
-	C.print();*/
-	Matrix D;
-	D = A + B;
-	D.print();
+	Matrix buffer;
+	if (left.get_rows() == right.get_rows() && left.get_cols() == right.get_cols())
+	{
+		buffer.set_rows(left.get_rows());
+		buffer.set_cols(left.get_cols());
+		buffer.set_arr();
 
+		for (int i = 0; i < buffer.get_rows(); i++)
+		{
+			for (int j = 0; j < buffer.get_cols(); j++)
+			{
+				buffer.set_arrij(i, j, left.get_arrij(i, j) - right.get_arrij(i, j));
+			}
+		}
+	}
+	return buffer;
 }
+Matrix operator * (Matrix& left, Matrix& right)
+{
+	Matrix buffer;
+	if (left.get_rows() == right.get_rows() && left.get_cols() == right.get_cols())
+	{
+		buffer.set_rows(left.get_rows());
+		buffer.set_cols(left.get_cols());
+		buffer.set_arr();
+
+		for (int i = 0; i < buffer.get_rows(); i++)
+		{
+			for (int j = 0; j < buffer.get_cols(); j++)
+			{
+				buffer.set_arrij(i, j, left.get_arrij(i, j) * right.get_arrij(i, j));
+			}
+		}
+	}
+	return buffer;
+}
+//std::ostream& operator <<(std::ostream& os, Matrix& obj)
+//{
+//	for (int i = 0; i < obj.get_rows(); i++)
+//	{
+//		for (int j = 0; j < obj.get_cols(); j++)
+//		{
+//			os << obj.set_arrij(i,j,value);
+//		}
+//	}
+//	return os;
+//}
