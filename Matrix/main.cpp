@@ -91,10 +91,11 @@ public:
 	{
 		if (this == &other)return *this;
 		for (int i = 0; i < rows; i++)
-		{
+			this->~Matrix();
+		/*{
 			delete arr[i];
 		}
-		delete[] arr;
+		delete[] arr;*/
 		this->rows = other.rows;
 		this->cols = other.cols;
 		this->arr = new int* [rows];
