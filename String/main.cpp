@@ -15,7 +15,7 @@ class String
 	char* str;//Адрес строки в динамической памяти
 public:
 	//             Constructors:
-    explicit String(int size = 80) //size - параметр по умолчанию
+	explicit String(int size = 80) //size - параметр по умолчанию
 	{
 		this->size = size; // c помощью size можно создать строку нужного размера
 		this->str = new char[size] {};
@@ -69,7 +69,7 @@ public:
 		return str;
 	}
 
-    int get_size()const
+	int get_size()const
 	{
 		return size;
 	}
@@ -87,7 +87,7 @@ public:
 
 String operator + (const String& left, const String& right)
 {
-	String buffer (left.get_size() + right.get_size() - 1);
+	String buffer(left.get_size() + right.get_size() - 1);
 	for (int i = 0; i < left.get_size(); i++)
 	{
 		buffer.get_str()[i] = left.get_str()[i];
@@ -121,14 +121,26 @@ void main()
 	str3.print();
 #endif // CAT_CHECK
 
+#ifdef CONSTRUCTORS_CHECK
 	String str1;           //Default constructor
 	str1.print();
 
 	String str2(8);        //Single-Argument Constructor
-	str2.print();          
+	str2.print();
 
 	String str3 = "Hello"; //Single-Argument Constructor
 	str3.print();
+
+	//String str4();       Здеесь НЕ вызывается конструктор и не создаётся объект, в этом выражении объявляется функция str4(),
+    //которая ничего не принимает, и возвращает объект класса 'String'.
+
+	String str5{};        //Явный вызов конструктора по умолчанию
+	str5.print();
+
+	String str6{ str3 };   //Copy Constructor
+	str6.print();
+#endif // CONSTRUCTORS_CHECK
+
 }
 
 int strlength(const char* str)
