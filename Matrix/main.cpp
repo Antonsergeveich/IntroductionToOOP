@@ -21,6 +21,13 @@ public:
 	{
 		return cols;
 	}
+	Matrix()
+	{
+		rows = 0;
+		cols = 0;
+		arr = nullptr;
+		cout << "DefaultConstructor\t" << this << endl;
+	}
 	Matrix(int rows = 2, int cols = 2)
 	{
 		this->rows = rows;
@@ -30,7 +37,7 @@ public:
 		{
 			arr[i] = new int[cols] {};
 		}
-		cout << "DefaultConstructor:\t" << this << endl;
+		cout << "BinaryConstructor:\t" << this << endl;
 	}
 	Matrix(const Matrix& other)
 	{
@@ -47,6 +54,22 @@ public:
 		}
 		cout << "CopyConstructor:\t" << this << endl;
 	}
+	Matrix& operator = (const Matrix& other)
+	{
+		this->rows = other.rows;
+		this->cols = other.cols;
+		this->arr = new int* [rows];
+		for (int i = 0; i < rows; i++)
+		{
+			this->arr[i] = new int[cols];
+			for (int j = 0; j < cols; j++)
+			{
+				this->arr[i][j] = other.arr[i][j];
+			}
+		}
+		return *this;
+		cout << "CopyAssignment:\t" << this << endl;
+	}
 	~Matrix()
 	{
 		for (int i = 0; i < rows; i++)
@@ -54,9 +77,6 @@ public:
 			delete arr[i];
 		}
 		delete[] arr;
-		rows = 0;
-		cols = 0;
-		arr = nullptr;
 		cout << "Destructor:\t" << this << endl;
 	}
 	void FillRand()const
@@ -90,4 +110,7 @@ void main()
 	A.print();
 	Matrix B(A);
 	B.print();
+	//Matrix C;
+	//C = B;
+	
 }
