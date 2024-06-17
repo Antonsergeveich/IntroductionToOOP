@@ -28,7 +28,7 @@ public:
 		arr = nullptr;
 		cout << "DefaultConstructor\t" << this << endl;
 	}
-	Matrix(int rows = 2, int cols = 2)
+	Matrix(int rows, int cols)
 	{
 		this->rows = rows;
 		this->cols = cols;
@@ -110,7 +110,7 @@ void main()
 	A.print();
 	Matrix B(A);
 	B.print();
-	//Matrix C;
-	//C = B;
-	
+	Matrix C;
+	C = B;
+	C.print();
 }
