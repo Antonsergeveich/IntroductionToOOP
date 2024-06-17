@@ -81,6 +81,10 @@ public:
 		cout << "Str:\t" << str << endl;
 	}
 };
+
+//#define CAT_CHECK
+#define CONSTRUCTORS_CHECK
+
 String operator + (const String& left, const String& right)
 {
 	String buffer (left.get_size() + right.get_size() - 1);
@@ -102,6 +106,7 @@ std::ostream& operator << (std::ostream& os, const String& obj)
 void main()
 {
 	setlocale(LC_ALL, "");
+#ifdef CAT_CHECK
 	//String str; str.print(); //Default Constructor
 	String str1 = "Hello"; //Single-argument Constructor
 	String str2 = "World";
@@ -113,6 +118,16 @@ void main()
 	String str3 = str1 + " " + str2; // С пробелом;
 	str3.print();//CopyConstructor
 	str3 = str1 + str2;  //CopyAssigment
+	str3.print();
+#endif // CAT_CHECK
+
+	String str1;           //Default constructor
+	str1.print();
+
+	String str2(8);        //Single-Argument Constructor
+	str2.print();          
+
+	String str3 = "Hello"; //Single-Argument Constructor
 	str3.print();
 }
 
