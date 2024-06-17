@@ -56,6 +56,12 @@ public:
 	}
 	Matrix& operator = (const Matrix& other)
 	{
+		if (this == &other)return *this;
+		for (int i = 0; i < rows; i++)
+		{
+			delete arr[i];
+		}
+		delete[] arr;
 		this->rows = other.rows;
 		this->cols = other.cols;
 		this->arr = new int* [rows];
@@ -67,8 +73,8 @@ public:
 				this->arr[i][j] = other.arr[i][j];
 			}
 		}
-		return *this;
 		cout << "CopyAssignment:\t" << this << endl;
+		return *this;
 	}
 	~Matrix()
 	{
