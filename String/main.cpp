@@ -14,73 +14,85 @@ class String
 	int size; //Размер строки в байтах
 	char* str;//Адрес строки в динамической памяти
 public:
-	//             Constructors:
-	explicit String(int size = 80) : size(size), str(new char[size] {}) //size - параметр по умолчанию
-	{
-		//this->size = size; // c помощью size можно создать строку нужного размера
-		//this->str = new char[size] {};
-		cout << "DefaultConstructor:\t" << this << endl;
-	}
-	String(const char str[]) : String(strlen(str) + 1)
-	{
-		//this->size = strlen(str) + 1; //размер строки в байтах с учётом терменирующего нуля, поэтому + 1;
-		//strlen() - функция которая считает размер строки в символах без терменирующего нуля '\0'
-		//this->str = new char[size] {};
-		for (int i = 0; str[i]; i++)this->str[i] = str[i];
-		cout << "Constructor:\t\t" << this << endl;
-	}
-	String(const String& other):String(other.str)
-	{
-		//Deep copy
-		//this->size = other.size;
-		//this->str = new char[size] {};
-		/*for (int i = 0; i < size; i++)
-		{
-			this->str[i] = other.str[i];
-		}*/
-		cout << "CopyConstructor:\t\t" << this << endl;
-	}
-	~String()
-	{
-		delete[]this->str;
-		cout << "Destructor:\t\t" << this << endl;
-	}
-	//           Operators:
-	String& operator = (const String& other)
-	{
-		if (this == &other)return *this;
-		delete[] this->str;
-		this->size = other.size;
-		this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-		{
-			this->str[i] = other.str[i];
-		}
-		cout << "CopyAssignment:\t\t" << this << endl;
-		return *this;
-	}
 	//             Methods:
-	const char* get_str()const
-	{
-		return str;
-	}
-	char* get_str()
-	{
-		return str;
-	}
+	int get_size()const;
+	const char* get_str()const;
+	char* get_str();
+	void print()const;
 
-	int get_size()const
-	{
-		return size;
-	}
-	void print()const
-	{
-		cout << "Obj:\t" << this << endl;
-		cout << "Size:\t" << size << endl;
-		cout << "Addr:\t" << &str << endl;
-		cout << "Str:\t" << str << endl;
-	}
+	//             Constructors:
+	explicit String(int size = 80);
+	String(const char str[]);
+	String(const String& other);
+	~String();
+	//           Operators:
+	String& operator = (const String& other);
 };
+
+//             Methods:
+int String :: get_size()const
+{
+	return size;
+}
+const char* String :: get_str()const
+{
+	return str;
+}
+char* String :: get_str()
+{
+	return str;
+}
+void String :: print()const
+{
+	cout << "Obj:\t" << this << endl;
+	cout << "Size:\t" << size << endl;
+	cout << "Addr:\t" << &str << endl;
+	cout << "Str:\t" << str << endl;
+}
+String :: String(int size) : size(size), str(new char[size] {}) //size - параметр по умолчанию
+{
+	//this->size = size; // c помощью size можно создать строку нужного размера
+	//this->str = new char[size] {};
+	cout << "DefaultConstructor:\t" << this << endl;
+}
+String :: String(const char str[]) : String(strlen(str) + 1)
+{
+	//this->size = strlen(str) + 1; //размер строки в байтах с учётом терменирующего нуля, поэтому + 1;
+	//strlen() - функция которая считает размер строки в символах без терменирующего нуля '\0'
+	//this->str = new char[size] {};
+	for (int i = 0; str[i]; i++)this->str[i] = str[i];
+	cout << "Constructor:\t\t" << this << endl;
+}
+String :: String(const String& other) :String(other.str)
+{
+	//Deep copy
+	//this->size = other.size;
+	//this->str = new char[size] {};
+	/*for (int i = 0; i < size; i++)
+	{
+		this->str[i] = other.str[i];
+	}*/
+	cout << "CopyConstructor:\t\t" << this << endl;
+}
+String :: ~String()
+{
+	delete[]this->str;
+	cout << "Destructor:\t\t" << this << endl;
+}
+//           Operators:
+String& String :: operator = (const String& other)
+{
+	if (this == &other)return *this;
+	delete[] this->str;
+	this->size = other.size;
+	this->str = new char[size] {};
+	for (int i = 0; i < size; i++)
+	{
+		this->str[i] = other.str[i];
+	}
+	cout << "CopyAssignment:\t\t" << this << endl;
+	return *this;
+}
 
 //#define CAT_CHECK
 #define CONSTRUCTORS_CHECK
