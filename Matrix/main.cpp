@@ -21,7 +21,7 @@ public:
 	{
 		return cols;
 	}
-	Matrix( const int rows, const int cols)
+	Matrix(int rows = 2, int cols = 2)
 	{
 		this->rows = rows;
 		this->cols = cols;
@@ -30,7 +30,22 @@ public:
 		{
 			arr[i] = new int[cols] {};
 		}
-		cout << "Constructor:\t" << this << endl;
+		cout << "DefaultConstructor:\t" << this << endl;
+	}
+	Matrix(const Matrix& other)
+	{
+		this->rows = other.rows;
+		this->cols = other.cols;
+		this->arr = new int* [rows];
+		for (int i = 0; i < rows; i++)
+		{
+			this->arr[i] = new int[cols];
+			for (int j = 0; j < cols; j++)
+			{
+				this->arr[i][j] = other.arr[i][j];
+			}
+		}
+		cout << "CopyConstructor:\t" << this << endl;
 	}
 	~Matrix()
 	{
@@ -70,7 +85,9 @@ public:
 void main()
 {
 	setlocale(LC_ALL, "");
-	Matrix M(4, 5);
-	M.FillRand();
-	M.print();
+	Matrix A(2, 3);
+	A.FillRand();
+	A.print();
+	Matrix B(A);
+	B.print();
 }
