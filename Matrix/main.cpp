@@ -58,7 +58,7 @@ public:
 	{
 		rows = 0;
 		cols = 0;
-		arr = nullptr;  
+		arr = nullptr;
 		cout << "DefaultConstructor\t" << this << endl;
 	}
 	Matrix(int rows, int cols)
@@ -148,29 +148,29 @@ void main()
 	Matrix A(3, 4);
 	A.FillRand();
 	A.print();
-    cout << delimeter << endl;
-	cout << A.get_arrij(2, 3)<<endl;
-    cout << delimeter << endl;
+	cout << delimeter << endl;
+	cout << A.get_arrij(2, 3) << endl;
+	cout << delimeter << endl;
 	Matrix B(A);
 	B.print();
-    cout << delimeter << endl;
+	cout << delimeter << endl;
 	Matrix C;
 	C = B;
 	C.print();
-    cout << delimeter << endl;
+	cout << delimeter << endl;
 	Matrix D;
 	D = A + B;
 	D.print();
-    cout << delimeter << endl;
+	cout << delimeter << endl;
 	Matrix E;
 	E = D - A;
 	E.print();
-    cout << delimeter << endl;
+	cout << delimeter << endl;
 	Matrix F;
 	F = A * B;
 	F.print();
-    cout << delimeter << endl;
-	
+	cout << delimeter << endl;
+
 }
 
 Matrix operator + (Matrix& left, Matrix& right)
@@ -181,7 +181,7 @@ Matrix operator + (Matrix& left, Matrix& right)
 		buffer.set_rows(left.get_rows());
 		buffer.set_cols(left.get_cols());
 		buffer.set_arr();
-		
+
 		for (int i = 0; i < buffer.get_rows(); i++)
 		{
 			for (int j = 0; j < buffer.get_cols(); j++)
