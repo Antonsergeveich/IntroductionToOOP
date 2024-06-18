@@ -44,7 +44,7 @@ public:
 	Fraction(int numerator, int denominator);
 	Fraction(int integer, int numerator, int denominator);
 	Fraction(const Fraction& other);
-	~Fraction(); 
+	~Fraction();
 	Fraction& operator=(const Fraction& other);
 	Fraction& operator *= (const Fraction& other);
 	Fraction& operator /= (const Fraction& other);
@@ -65,39 +65,39 @@ public:
 	void print()const;
 };
 
-int Fraction :: get_integer()const
+int Fraction::get_integer()const
 {
 	return integer;
 }
-int Fraction :: get_numerator()const
+int Fraction::get_numerator()const
 {
 	return numerator;
 }
-int Fraction :: get_denominator()const
+int Fraction::get_denominator()const
 {
 	return denominator;
 }
-void Fraction :: set_integer(int integer)
+void Fraction::set_integer(int integer)
 {
 	this->integer = integer;
 }
-void Fraction :: set_numerator(int numerator)
+void Fraction::set_numerator(int numerator)
 {
 	this->numerator = numerator;
 }
-void Fraction :: set_denominator(int denominator)
+void Fraction::set_denominator(int denominator)
 {
 	if (denominator == 0)denominator = 1;
 	this->denominator = denominator;
 }
-Fraction :: Fraction()
+Fraction::Fraction()
 {
 	integer = 0;
 	numerator = 0;
 	denominator = 1;
 	cout << "DefaultConstructor:\t" << this << endl;
 }
-explicit Fraction :: Fraction(int integer)//Single-argument Constructor
+Fraction::Fraction(int integer)//Single-argument Constructor
 {
 	//explicit - явный
 	//implicit - неявный
@@ -106,7 +106,7 @@ explicit Fraction :: Fraction(int integer)//Single-argument Constructor
 	this->denominator = 1;
 	cout << "1ArgConstructor:\t" << this << endl;
 }
-Fraction :: Fraction(double decimal)
+Fraction::Fraction(double decimal)
 {
 	decimal += 1e-10; // 0,0000000001 те разряды которые мы хотим сохранить
 	//выравняются до того значения которое нам нужно 
@@ -118,21 +118,21 @@ Fraction :: Fraction(double decimal)
 	reduction();
 	cout << "Consttructor:\t" << this << endl;
 }
-Fraction :: Fraction(int numerator, int denominator)
+Fraction::Fraction(int numerator, int denominator)
 {
 	this->integer = 0;
 	this->numerator = numerator;
 	this->set_denominator(denominator);
 	cout << "Constructor:\t\t" << this << endl;
 }
-Fraction :: Fraction(int integer, int numerator, int denominator)
+Fraction::Fraction(int integer, int numerator, int denominator)
 {
 	this->integer = integer;
 	this->numerator = numerator;
 	this->set_denominator(denominator);
 	cout << "Constructor:\t\t" << this << endl;
 }
-Fraction :: Fraction(const Fraction& other)
+Fraction::Fraction(const Fraction& other)
 {
 	this->integer = other.integer;
 	this->numerator = other.numerator;
@@ -209,11 +209,11 @@ Fraction& Fraction :: operator -= (Fraction& other)
 {
 	return *this = *this - other;
 }
-explicit Fraction :: operator int()
+Fraction :: operator int()
 {
 	return integer;
 }
-explicit Fraction :: operator double()
+Fraction :: operator double()
 {
 	return integer + (double)numerator / denominator;
 	/*double a;
@@ -221,26 +221,26 @@ explicit Fraction :: operator double()
 	a = (double)numerator / denominator;
 	return a;*/
 }
-Fraction& Fraction :: to_proper()
+Fraction& Fraction::to_proper()
 {
 	integer += numerator / denominator;
 	numerator %= denominator;
 	return *this;
 }
-Fraction& Fraction :: to_improper()
+Fraction& Fraction::to_improper()
 {
 	numerator += integer * denominator;
 	integer = 0;
 	return *this;
 }
-Fraction Fraction :: inverted()const
+Fraction Fraction::inverted()const
 {
 	Fraction inverted = *this;
 	inverted.to_improper();
 	swap(inverted.numerator, inverted.denominator); // swap - меняет местами элементы
 	return inverted;
 }
-Fraction& Fraction :: reduction()
+Fraction& Fraction::reduction()
 {
 	//https://www.webmath.ru/poleznoe/formules_12_7.php
 	int more, less, rest;
@@ -257,7 +257,7 @@ Fraction& Fraction :: reduction()
 	denominator /= GCD;
 	return *this;
 }
-void Fraction :: print()const
+void Fraction::print()const
 {
 	if (integer)cout << integer;
 	if (numerator)
