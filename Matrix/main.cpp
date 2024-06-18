@@ -13,6 +13,7 @@ Matrix operator + (Matrix& left, Matrix& right);
 Matrix operator - (Matrix& left, Matrix& right);
 Matrix operator * (Matrix& left, Matrix& right);
 std::ostream& operator <<(std::ostream& os, const Matrix& obj);
+std::istream& operator >>(std::istream& is, const Matrix& obj);
 
 class Matrix
 {
@@ -96,12 +97,8 @@ public:
 	Matrix& operator = (const Matrix& other)
 	{
 		if (this == &other)return *this;
-		for (int i = 0; i < rows; i++)
+		for (int i = 0; i < rows; i++) 
 			this->~Matrix();
-		/*{
-			delete arr[i];
-		}
-		delete[] arr;*/
 		this->rows = other.rows;
 		this->cols = other.cols;
 		this->arr = new int* [rows];
@@ -156,7 +153,10 @@ void main()
 	A.print();
 	cout << delimeter << endl;
 	//cout << A.get_arrij(2, 3) << endl;
-	cout << A ;
+	cout << A << endl;
+	cin >> A;
+	cout << A << endl;
+	cout << endl;
 	/*cout << delimeter << endl;
 	Matrix B(A);
 	B.print();
@@ -247,4 +247,16 @@ std::ostream& operator <<(std::ostream& os, const Matrix& obj)
 		cout << endl;
 	}
 	return os;
+}
+std::istream& operator >>(std::istream& is, const Matrix& obj)
+{
+	for (int i = 0; i < obj.get_rows(); i++)
+	{
+		for (int j = 0; j < obj.get_cols(); j++)
+		{
+			is >> obj.get_arr()[i][j];
+		}
+		cout << endl;
+	}
+	return is;
 }
