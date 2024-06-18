@@ -5,12 +5,14 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+#define delimeter "\n-------------------------------\n"
+
+class Fraction;
+
 Fraction operator+(const Fraction& left, const Fraction& right); //сложение дробей
 Fraction operator+(const Fraction& left, const int value);
 Fraction operator/(const Fraction& left, const int value);
 Fraction operator/(const Fraction& left, const Fraction& right);
-
-#define delimeter "\n-------------------------------\n"
 
 class Fraction
 {
@@ -19,6 +21,7 @@ class Fraction
 	int integer;      //целое число
 public:
 	Fraction();
+	Fraction(int integer);
 	Fraction(int integer, int numerator, int denominator);
 	Fraction& operator = (const Fraction& fract);
 	Fraction& operator ++();
@@ -32,63 +35,72 @@ public:
 	void Print()const;
 };
 
-Fraction()
+Fraction::Fraction()
 {
 	integer = 0;
 	numerator = 0;
 	denominator = 0;
+	cout << "DefaultConstructor:\t" << this << endl;
 }
 
-Fraction(int integer, int numerator, int denominator)
+Fraction :: Fraction(int integer)
+{
+	this->integer = integer;
+	this->numerator = 0;
+	this->denominator = 1;
+	cout << "1ArgConstructor:\t" << this << endl;
+}
+
+Fraction::Fraction(int integer, int numerator, int denominator)
 {
 	this->integer = integer;
 	this->numerator = numerator;
 	this->denominator = denominator;
 }
 
-Fraction& operator = (const Fraction& fract)
+Fraction& Fraction :: operator = (const Fraction& fract)
 {
 	this->integer = fract.integer;
 	this->numerator = fract.numerator;
 	this->denominator = fract.denominator;
 	return *this;
 }
-Fraction& operator ++()//Prefix increment
+Fraction& Fraction :: operator ++()//Prefix increment
 {
 	integer++;
 	return *this;
 }
-Fraction operator ++(int)//Postfix increment
+Fraction Fraction :: operator ++(int)//Postfix increment
 {
 	Fraction old = *this;
 	integer++;
 	return old;
 }
-int get_integer()const
+int Fraction :: get_integer()const
 {
 	return integer;
 }
-int get_numerator()const
+int Fraction :: get_numerator()const
 {
 	return numerator;
 }
-int get_denominator()const
+int Fraction :: get_denominator()const
 {
 	return denominator;
 }
-void set_integer(int integer)
+void Fraction :: set_integer(int integer)
 {
 	this->integer = integer;
 }
-void set_numerator(int numerator)
+void Fraction :: set_numerator(int numerator)
 {
 	this->numerator = numerator;
 }
-void set_denominator(int denominator)
+void Fraction :: set_denominator(int denominator)
 {
 	this->denominator = denominator;
 }
-void Print()const
+void Fraction :: Print()const
 {
 	cout << "Integer = \t" << integer << endl;
 	cout << "Numerator = \t" << numerator << endl;
@@ -147,10 +159,10 @@ Fraction operator/(const Fraction& left, const Fraction& right) //деление
 void main()
 {
 	setlocale(LC_ALL, "");
-	Fraction F1(2,1,2);
+	Fraction F1(2, 1, 2);
 	F1.Print();
 	cout << delimeter << endl;
-	Fraction F2(1,3,4);
+	Fraction F2(1, 3, 4);
 	F2.Print();
 	cout << delimeter << endl;
 	F1 = F1 + 2;
