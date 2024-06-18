@@ -11,10 +11,20 @@ using std::endl;
 
 class Fraction;
 
+bool operator == (Fraction left, Fraction right);
+bool operator != (const Fraction& left, const Fraction& right);
+bool operator > (Fraction left, Fraction right);
+bool operator < (Fraction left, Fraction right);
+bool operator >= (const Fraction& left, const  Fraction& right);
+bool operator <= (const Fraction& left, const Fraction& right);
+
 Fraction operator* (Fraction left, Fraction right);
 Fraction operator/ (const Fraction& left, const Fraction& right);
 Fraction operator+ (Fraction& left, Fraction& right);
 Fraction operator- (Fraction& left, Fraction& right);
+
+std::ostream& operator<<(std::ostream& os, const Fraction& obj);
+std::istream& operator>>(std::istream& is, Fraction& obj);
 
 class Fraction
 {
@@ -133,7 +143,7 @@ Fraction :: ~Fraction()
 {
 	cout << "Destructor:\t\t" << this << endl;
 }
-Fraction& operator=(const Fraction& other)
+Fraction& Fraction :: operator=(const Fraction& other)
 {
 	this->integer = other.integer;
 	this->numerator = other.numerator;
@@ -141,15 +151,15 @@ Fraction& operator=(const Fraction& other)
 	cout << "CopyAssignment:\t\t" << this << endl;
 	return *this;
 }
-Fraction& operator *= (const Fraction& other)
+Fraction& Fraction :: operator *= (const Fraction& other)
 {
 	return *this = *this * other;
 }
-Fraction& operator /= (const Fraction& other)
+Fraction& Fraction :: operator /= (const Fraction& other)
 {
 	return *this = *this / other;
 }
-Fraction& operator++()//Prefix increment
+Fraction& Fraction :: operator++()//Prefix increment
 {
 	// Если переменная возвращается по ссылке, 
 	// то это полноценный объект к которому можно применить операторы 
@@ -157,7 +167,7 @@ Fraction& operator++()//Prefix increment
 	integer++;
 	return *this;
 }
-Fraction operator++(int)//Postfix increment
+Fraction Fraction :: operator++(int)//Postfix increment
 {
 	// Если значение возвращается по значению,
 	// на месте вызова создаётся 
@@ -170,51 +180,40 @@ Fraction operator++(int)//Postfix increment
 	return old;
 }
 
-Fraction& operator--()//Prefix decrement
+Fraction& Fraction ::operator--()//Prefix decrement
 {
 	integer--;
 	return *this;
 }
-Fraction operator--(int)//Postfix decrement
+Fraction Fraction :: operator--(int)//Postfix decrement
 {
 	Fraction old = *this;
 	integer--;
 	return old;
 }
-Fraction& operator += (int rvalue)
+Fraction& Fraction :: operator += (int rvalue)
 {
 	this->integer = integer + rvalue;
 	return *this;
 }
-Fraction& operator -= (int rvalue)
+Fraction& Fraction :: operator -= (int rvalue)
 {
 	this->integer = integer - rvalue;
 	return *this;
 }
-Fraction& operator += (Fraction& other)
+Fraction& Fraction :: operator += (Fraction& other)
 {
 	return *this = *this + other;
 }
-Fraction& operator -= (Fraction& other)
+Fraction& Fraction :: operator -= (Fraction& other)
 {
 	return *this = *this - other;
 }
-//Type-cast operators:
-/*
---------------------------------------------
-operator type()
-{
-	.....;
-	.....;
-	return value;
-}
---------------------------------------------
-*/
-explicit operator int()
+explicit Fraction :: operator int()
 {
 	return integer;
 }
-explicit operator double()
+explicit Fraction :: operator double()
 {
 	return integer + (double)numerator / denominator;
 	/*double a;
@@ -222,28 +221,26 @@ explicit operator double()
 	a = (double)numerator / denominator;
 	return a;*/
 }
-
-//              Methods:
-Fraction& to_proper()
+Fraction& Fraction :: to_proper()
 {
 	integer += numerator / denominator;
 	numerator %= denominator;
 	return *this;
 }
-Fraction& to_improper()
+Fraction& Fraction :: to_improper()
 {
 	numerator += integer * denominator;
 	integer = 0;
 	return *this;
 }
-Fraction inverted()const
+Fraction Fraction :: inverted()const
 {
 	Fraction inverted = *this;
 	inverted.to_improper();
 	swap(inverted.numerator, inverted.denominator); // swap - меняет местами элементы
 	return inverted;
 }
-Fraction& reduction()
+Fraction& Fraction :: reduction()
 {
 	//https://www.webmath.ru/poleznoe/formules_12_7.php
 	int more, less, rest;
@@ -260,7 +257,7 @@ Fraction& reduction()
 	denominator /= GCD;
 	return *this;
 }
-void print()const
+void Fraction :: print()const
 {
 	if (integer)cout << integer;
 	if (numerator)
@@ -341,13 +338,6 @@ Fraction operator- (Fraction& left, Fraction& right)
 		left.get_denominator() * right.get_denominator()
 	).to_proper().reduction();
 }
-//Stream - поток
-//std - Standard namespace
-//:: - SCOPE OPERATOR (Оператор разрешения видимости) позволяет зайти в пространство имён
-//Сам по себе '::' вводит нас в GlobalScope (Глобальное пространство имён)
-//namespace (пространство имён) как папка, а имя, расположенное в нём как файл
-//ostream - output stream (поток вывода)
-//cout - Console Out
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 {
 	if (obj.get_integer())os << obj.get_integer();
