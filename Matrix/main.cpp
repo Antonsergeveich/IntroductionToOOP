@@ -8,9 +8,11 @@ using std::endl;
 #define delimeter "\n-------------------------------\n"
 
 class Matrix;
+
 Matrix operator + (Matrix& left, Matrix& right);
 Matrix operator - (Matrix& left, Matrix& right);
 Matrix operator * (Matrix& left, Matrix& right);
+std::ostream& operator <<(std::ostream& os, const Matrix& obj);
 
 class Matrix
 {
@@ -29,6 +31,10 @@ public:
 	int get_arrij(int i, int j)
 	{
 		return arr[i][j];
+	}
+	int** get_arr()const
+	{
+		return arr;
 	}
 	void set_rows(int rows)
 	{
@@ -149,8 +155,9 @@ void main()
 	A.FillRand();
 	A.print();
 	cout << delimeter << endl;
-	cout << A.get_arrij(2, 3) << endl;
-	cout << delimeter << endl;
+	//cout << A.get_arrij(2, 3) << endl;
+	cout << A ;
+	/*cout << delimeter << endl;
 	Matrix B(A);
 	B.print();
 	cout << delimeter << endl;
@@ -169,8 +176,7 @@ void main()
 	Matrix F;
 	F = A * B;
 	F.print();
-	cout << delimeter << endl;
-
+	cout << delimeter << endl;*/
 }
 
 Matrix operator + (Matrix& left, Matrix& right)
@@ -230,14 +236,15 @@ Matrix operator * (Matrix& left, Matrix& right)
 	}
 	return buffer;
 }
-//std::ostream& operator <<(std::ostream& os, Matrix& obj)
-//{
-//	for (int i = 0; i < obj.get_rows(); i++)
-//	{
-//		for (int j = 0; j < obj.get_cols(); j++)
-//		{
-//			os << obj.set_arrij(i,j,value);
-//		}
-//	}
-//	return os;
-//}
+std::ostream& operator <<(std::ostream& os, const Matrix& obj)
+{
+	for (int i = 0; i < obj.get_rows(); i++)
+	{
+		for (int j = 0; j < obj.get_cols(); j++)
+		{
+			cout << obj.get_arr()[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	return os;
+}
