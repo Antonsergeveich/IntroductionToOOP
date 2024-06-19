@@ -68,20 +68,28 @@ public:
 		arr = nullptr;
 		cout << "DefaultConstructor\t" << this << endl;
 	}
-	Matrix(int rows, int cols)
+	Matrix(int rows, int cols) : rows(rows), cols(cols), arr(new int* [rows] {})
 	{
-		this->rows = rows;
+		/*this->rows = rows;
 		this->cols = cols;
-		this->arr = new int* [rows] {};
+		this->arr = new int* [rows] {};*/
 		for (int i = 0; i < rows; i++)
 		{
 			arr[i] = new int[cols] {};
 		}
 		cout << "BinaryConstructor:\t" << this << endl;
 	}
-	Matrix(const Matrix& other)
+	Matrix(const Matrix& other) : Matrix(other.rows, other.cols)
 	{
-		this->rows = other.rows;
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < cols; j++)
+			{
+				arr[i][j] = other.arr[i][j];
+			}
+			cout << "CopyConstructor:\t" << this << endl;
+		}
+		/*this->rows = other.rows;
 		this->cols = other.cols;
 		this->arr = new int* [rows];
 		for (int i = 0; i < rows; i++)
@@ -91,10 +99,10 @@ public:
 			{
 				this->arr[i][j] = other.arr[i][j];
 			}
-		}
-		cout << "CopyConstructor:\t" << this << endl;
+			cout << "CopyConstructor:\t" << this << endl;
+		}*/
 	}
-	Matrix& operator = (const Matrix& other)
+	Matrix& operator = (const Matrix& other) 
 	{
 		if (this == &other)return *this;
 		for (int i = 0; i < rows; i++) 
@@ -153,11 +161,11 @@ void main()
 	A.print();
 	cout << delimeter << endl;
 	//cout << A.get_arrij(2, 3) << endl;
-	cout << A << endl;
+	/*cout << A << endl;
 	cin >> A;
 	cout << A << endl;
-	cout << endl;
-	/*cout << delimeter << endl;
+	cout << endl;*/
+	//cout << delimeter << endl;
 	Matrix B(A);
 	B.print();
 	cout << delimeter << endl;
@@ -165,7 +173,7 @@ void main()
 	C = B;
 	C.print();
 	cout << delimeter << endl;
-	Matrix D;
+	/*Matrix D;
 	D = A + B;
 	D.print();
 	cout << delimeter << endl;
