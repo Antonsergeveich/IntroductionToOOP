@@ -200,4 +200,5 @@ void main()
 		group[i]->info();
 		cout << delimiter << endl;
 	}
+
 }
